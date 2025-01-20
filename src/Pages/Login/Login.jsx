@@ -55,7 +55,7 @@ const Login = () => {
     return (
         <>
             <Helmet>
-                <title>Bistro Boss | Login</title>
+            <title>Grand-Gateway | Log In</title>
             </Helmet>
             <div className="hero min-h-screen bg-base-200 pt-20">
                 <div className="hero-content flex-col md:flex-row-reverse">

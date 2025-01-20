@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link, NavLink } from 'react-router-dom'; 
+import { Link, NavLink } from 'react-router-dom';
 import userIcon from '../../../assets/user2.png'
 import { RxAvatar } from "react-icons/rx";
 import '../../../App.css'
@@ -11,16 +11,16 @@ const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   console.log(user);
 
-const handleLogOut = () => {
-  logOut()
+  const handleLogOut = () => {
+    logOut()
       .then(() => { })
       .catch(error => console.log(error));
-}
+  }
 
-    const links = <>
+  const links = <>
 
     <li className='font-bold text-lg text-white'><NavLink to="/">Home</NavLink></li>
-   
+
   </>
 
 
@@ -49,8 +49,8 @@ const handleLogOut = () => {
           </ul>
         </div>
         <div className='flex items-center'>
-        <a className="btn btn-ghost text-2xl text-white font-bold">Grand -<span className='text-orange-500'>Gateway</span> </a>
-        <img className='w-10' src={logo} alt="" />
+          <a className="btn btn-ghost text-2xl text-white font-bold">Grand -<span className='text-orange-500'>Gateway</span> </a>
+          <img className='w-10' src={logo} alt="" />
         </div>
 
       </div>
@@ -61,19 +61,29 @@ const handleLogOut = () => {
       </div>
       <div className="navbar-end gap-2">
 
-    <div>
-        <button className='btn btn-success text-white'>hey</button>
-    </div>
+        <div>
+          <button className='btn btn-success text-white'>hey</button>
+        </div>
         <div className="login flex gap-2 items-center">
           <div className=" ">
             {user && user?.email ? (
               <div>
-                <img className="w-10 rounded-full" src={user?.photoURL} alt="" />
-                <p>{user.displayName}</p>
+               
+
+                <details className="dropdown w-[80%]">
+                  <summary className="border-none m-1 p-0"> <img className="w-10 rounded-full" src={user?.photoURL} alt="" /></summary>
+                  <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-36 p-2 shadow">
+                    <li className=' cursor-not-allowed bg-none pl-3 '>{user.displayName}</li>
+                    <li><a>Item 2</a></li>
+                  </ul>
+                </details>
+
+
+                {/* <p>{user.displayName}</p> */}
               </div>
             ) : (
-            //   <img className='text-white' src={userIcon} alt="" />
-            <span className='text-5xl'> <RxAvatar /> </span>
+              //   <img className='text-white' src={userIcon} alt="" />
+              <span className='text-5xl'> <RxAvatar /> </span>
             )}
           </div>
           {user && user?.email ? (
@@ -88,7 +98,7 @@ const handleLogOut = () => {
 
 
 
-         
+
 
 
         </div>
