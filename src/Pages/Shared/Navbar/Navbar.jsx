@@ -5,6 +5,10 @@ import { RxAvatar } from "react-icons/rx";
 import '../../../App.css'
 import logo from "../../../assets/motorbike.png"
 import { AuthContext } from '../../../Providers/AuthProvider';
+import '../../../App.css'
+
+
+
 
 const Navbar = () => {
 
@@ -70,27 +74,34 @@ const Navbar = () => {
               <div>
                
 
-                <details className="dropdown w-[80%]">
-                  <summary className="border-none m-1 p-0"> <img className="w-10 rounded-full" src={user?.photoURL} alt="" /></summary>
+                <details className="dropdown leading-none  ">
+                  <summary className="border-none m-1 p-0 outline-none"> <img className="w-10 rounded-full" src={user?.photoURL} alt="" /></summary>
                   <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-36 p-2 shadow">
-                    <li className=' cursor-not-allowed bg-none pl-3 '>{user.displayName}</li>
-                    <li><a>Item 2</a></li>
+                   <li className=' cursor-not-allowed bg-none pl-3 '>{user.displayName}</li>
+                    <Link to="/dashboard"> <li><a>Dashboard</a></li></Link>
+                    <Link to="/"> <li onClick={handleLogOut}><a>Log-Out</a></li></Link>
                   </ul>
                 </details>
 
 
-                {/* <p>{user.displayName}</p> */}
               </div>
             ) : (
               //   <img className='text-white' src={userIcon} alt="" />
               <span className='text-5xl'> <RxAvatar /> </span>
             )}
           </div>
-          {user && user?.email ? (
-            <button onClick={handleLogOut} className="btn btn-neutral rounded-none">
-              Log-Out
-            </button>
-          ) : (
+
+
+          {user && user?.email ? 
+          
+          (
+            // <button onClick={handleLogOut} className="btn btn-neutral rounded-none">
+            //   Log-Out
+            // </button>
+            <></>
+          ) :
+          
+          (
             <Link to="/login" className="btn btn-neutral rounded-none text-white">
               Login
             </Link>
