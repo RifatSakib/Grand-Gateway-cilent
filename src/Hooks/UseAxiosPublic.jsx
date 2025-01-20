@@ -2,15 +2,12 @@ import React from 'react';
 import axios from "axios";
 
 const axiosPublic = axios.create({
-    baseURL: 'https://bistro-boss-server-gamma-ashy.vercel.app'
+    baseURL: 'http://localhost:5000'
 })
 
 const UseAxiosPublic = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+    return axiosPublic;
+
 };
 
 export default UseAxiosPublic;
