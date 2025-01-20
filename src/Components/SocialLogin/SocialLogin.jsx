@@ -1,46 +1,46 @@
 import { FaGoogle } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useNavigate } from "react-router-dom";
-import UseAuth from "../../hooks/useAuth";
-import UseAxiosPublic from "../../Hooks/UseAxiosPublic";
+import Swal from "sweetalert2";
 
 
 const SocialLogin = () => {
-    const { googleSignIn } = UseAuth();
-    const axiosPublic = UseAxiosPublic();
+    const { googleSignIn } = useAuth();
+    // const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
 
-    const handleGoogleSignIn = () =>{
-        // googleSignIn()
-        // .then(result =>{
-        //     console.log(result.user);
-        //     const userInfo = {
-        //         email: result.user?.email,
-        //         name: result.user?.displayName
-        //     }
-        //     axiosPublic.post('/users', userInfo)
-        //     .then(res =>{
-        //         console.log(res.data);
-        //         navigate('/');
-        //     })
-        // })
-
-
+    const handleGoogleSignIn = () => {
         googleSignIn()
-        .then((result) => {
-            const user = result.user;
-            console.log(result.user);
-            Swal.fire({
-                title: "Good job!",
-                text: "Login Successful!",
-                icon: "success"
-            }); setUser(user);
-            navigate("/"); //login korar por readmore er page a niye zabe.
-        })
-        .catch(err => {
-            // setError({ ...error, login: err.code });
-            console.log(err);
-        });
+            .then(result => {
+                console.log(result.user);
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'User created successfully.',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                navigate('/');
+                const userInfo = {
+                    email: result.user?.email,
+                    name: result.user?.displayName
+                }
 
+
+
+
+                    // axiosPublic.post('/users', userInfo)
+                    // .then(res => {
+                    //     console.log(res.data);
+                    //     alert("ha ha ha")
+                    //     navigate('/');
+
+
+                       
+
+                    // })
+            })
     }
 
     return (

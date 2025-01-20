@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom'; 
 import userIcon from '../../../assets/user2.png'
 import { RxAvatar } from "react-icons/rx";
 import '../../../App.css'
 import logo from "../../../assets/motorbike.png"
+import { AuthContext } from '../../../Providers/AuthProvider';
 
 const Navbar = () => {
 
-const user = false;
+  const { user, logOut } = useContext(AuthContext);
+  console.log(user);
+
+const handleLogOut = () => {
+  logOut()
+      .then(() => { })
+      .catch(error => console.log(error));
+}
+
     const links = <>
 
     <li className='font-bold text-lg text-white'><NavLink to="/">Home</NavLink></li>
@@ -68,11 +77,11 @@ const user = false;
             )}
           </div>
           {user && user?.email ? (
-            <button onClick={logOut} className="btn btn-neutral rounded-none">
+            <button onClick={handleLogOut} className="btn btn-neutral rounded-none">
               Log-Out
             </button>
           ) : (
-            <Link to="/auth/login" className="btn btn-neutral rounded-none text-white">
+            <Link to="/login" className="btn btn-neutral rounded-none text-white">
               Login
             </Link>
           )}
