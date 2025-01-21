@@ -6,6 +6,7 @@ import Home from '../Pages/Home/Home/Home';
 import Login from '../Pages/Login/Login';
 import SignUp from '../Pages/SignUp/SignUp';
 import Dashboard from '../Pages/Dashboard/Dashboard';
+import PrivateRoute from './PrivateRoute';
 
 export const router = createBrowserRouter([
   {
@@ -31,9 +32,10 @@ export const router = createBrowserRouter([
 
 {
   path: "dashboard",
-  element: <Dashboard></Dashboard>
+  element: <PrivateRoute> <Dashboard></Dashboard></PrivateRoute> 
 },
 
+ 
 
 
   {
