@@ -5,8 +5,9 @@ import Error from '../Pages/Shared/Error/Error';
 import Home from '../Pages/Home/Home/Home';
 import Login from '../Pages/Login/Login';
 import SignUp from '../Pages/SignUp/SignUp';
-import Dashboard from '../Pages/Dashboard/Dashboard';
+// import Dashboard from '../Pages/Dashboard/Dashboard';
 import PrivateRoute from './PrivateRoute';
+import Dashboard from '../Layout/Dashboard';
 
 export const router = createBrowserRouter([
   {
