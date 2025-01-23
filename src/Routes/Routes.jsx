@@ -9,6 +9,7 @@ import SignUp from '../Pages/SignUp/SignUp';
 import PrivateRoute from './PrivateRoute';
 import Dashboard from '../Layout/Dashboard';
 import AllUsers from '../Pages/Dashboard/AllUsers/AllUsers';
+import AdminRoute from './AdminRoute';
 
 export const router = createBrowserRouter([
   {
@@ -43,7 +44,7 @@ export const router = createBrowserRouter([
     
     {
       path: 'users',
-      element: <AllUsers></AllUsers>
+      element: <AdminRoute> <AllUsers></AllUsers> </AdminRoute> 
     }
 
   ]
