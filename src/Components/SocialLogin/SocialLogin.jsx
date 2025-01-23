@@ -7,21 +7,13 @@ import Swal from "sweetalert2";
 
 const SocialLogin = () => {
     const { googleSignIn } = useAuth();
-    // const axiosPublic = useAxiosPublic();
+    const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
 
     const handleGoogleSignIn = () => {
         googleSignIn()
             .then(result => {
                 console.log(result.user);
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'User created successfully.',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                navigate('/');
                 const userInfo = {
                     email: result.user?.email,
                     name: result.user?.displayName
@@ -30,16 +22,24 @@ const SocialLogin = () => {
 
 
 
-                    // axiosPublic.post('/users', userInfo)
-                    // .then(res => {
-                    //     console.log(res.data);
-                    //     alert("ha ha ha")
-                    //     navigate('/');
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        console.log(res.data);
+
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'User created successfully.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        navigate('/');
 
 
-                       
 
-                    // })
+
+                    })
             })
     }
 

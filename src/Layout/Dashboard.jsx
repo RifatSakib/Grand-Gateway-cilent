@@ -11,30 +11,26 @@ const Dashboard = () => {
             <ul className="menu p-4">
             
                         <li>
-                            <NavLink to="/dashboard/adminHome">
+                            <NavLink to="/dashboard/parcels">
                                 <FaHome></FaHome>
-                                Admin Home</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/dashboard/addItems">
-                                <FaUtensils></FaUtensils>
-                                Add Items</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/dashboard/manageItems">
-                                <FaList></FaList>
-                                Manage Items</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/dashboard/bookings">
-                                <FaBook></FaBook>
-                                Manage Bookings</NavLink>
+                                All Parcels</NavLink>
                         </li>
                         <li>
                             <NavLink to="/dashboard/users">
-                                <FaUsers></FaUsers>
+                                <FaUtensils></FaUtensils>
                                 All Users</NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/dashboard/deliveryman">
+                                <FaList></FaList>
+                                All Delivery Men</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/dashboard/statistics">
+                                <FaBook></FaBook>
+                                Statistics</NavLink>
+                        </li>
+                       
                  
                 {/* shared nav links */}
                 <div className="divider"></div>
