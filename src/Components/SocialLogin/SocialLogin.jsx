@@ -1,13 +1,14 @@
 import { FaGoogle } from "react-icons/fa";
-import useAuth from "../../hooks/useAuth";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import UseAxiosPublic from "../../Hooks/UseAxiosPublic";
+import UseAuth from "../../Hooks/UseAuth"
+;
 
 
 const SocialLogin = () => {
-    const { googleSignIn } = useAuth();
-    const axiosPublic = useAxiosPublic();
+    const { googleSignIn } = UseAuth();
+    const axiosPublic = UseAxiosPublic();
     const navigate = useNavigate();
 
     const handleGoogleSignIn = () => {
