@@ -9,7 +9,7 @@ const Dashboard = () => {
 
 
     // TODO: get isAdmin value from the database
-    // const [isAdmin] = UseAdmin();
+    const [isAdmin] = UseAdmin();
 
 
     return (
@@ -17,7 +17,8 @@ const Dashboard = () => {
             {/* dashboard side bar */}
             <div className="w-64 min-h-screen bg-blue-400">
                 <ul className="menu p-4">
-                   
+                    {
+                        isAdmin ? <>
                             <li>
                                 <NavLink to="/dashboard/parcels">
                                     <FaHome></FaHome>
@@ -39,9 +40,29 @@ const Dashboard = () => {
                                     Statistics</NavLink>
                             </li>
 
-                      
-                        
-                    
+                        </>
+                            :
+                            <>
+                                <li>
+                                    <NavLink to="/dashboard/userHome">
+                                        <FaHome></FaHome>
+                                        Book a Parcel</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/history">
+                                        <FaCalendar></FaCalendar>
+                                        My Parcels</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/cart">
+                                        <FaShoppingCart></FaShoppingCart>
+                                        My Profile </NavLink>
+                                </li>
+                                
+                            </>
+                    }
+
+
 
 
 
