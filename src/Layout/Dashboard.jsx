@@ -2,6 +2,7 @@ import React from 'react';
 import { FaAd, FaBook, FaCalendar, FaEnvelope, FaHome, FaList, FaSearch, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
 import { NavLink, Outlet } from 'react-router-dom';
 import UseAdmin from '../Hooks/UseAdmin';
+import UseDeliveryman from '../Hooks/UseDeliveryman';
 
 
 const Dashboard = () => {
@@ -10,6 +11,8 @@ const Dashboard = () => {
 
     // TODO: get isAdmin value from the database
     const [isAdmin] = UseAdmin();
+
+    const [isDeliveryman] = UseDeliveryman();
 
 
     return (
@@ -42,14 +45,31 @@ const Dashboard = () => {
 
                         </>
                             :
+
+                            isDeliveryman?
+                            <>
+                              <li>
+                                    <NavLink to="/dashboard/userHome">
+                                        <FaHome></FaHome>
+                                        My Delivery List</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/history">
+                                        <FaCalendar></FaCalendar>
+                                        My Reviews</NavLink>
+                                </li>
+                              
+                            </> 
+                            :
+
                             <>
                                 <li>
-                                    <NavLink to="/dashboard/userHome">
+                                    <NavLink to="/dashboard/bookaparcel">
                                         <FaHome></FaHome>
                                         Book a Parcel</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/dashboard/history">
+                                    <NavLink to="/dashboard/myparcels">
                                         <FaCalendar></FaCalendar>
                                         My Parcels</NavLink>
                                 </li>

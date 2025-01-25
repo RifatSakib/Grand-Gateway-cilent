@@ -10,6 +10,8 @@ import PrivateRoute from './PrivateRoute';
 import Dashboard from '../Layout/Dashboard';
 import AllUsers from '../Pages/Dashboard/AllUsers/AllUsers';
 import AdminRoute from './AdminRoute';
+import BookAParcel from '../Pages/Dashboard/BookAParcel/BookAParcel';
+import MyParcels from '../Pages/Dashboard/MyParcels/MyParcels';
 
 export const router = createBrowserRouter([
   {
@@ -38,7 +40,16 @@ export const router = createBrowserRouter([
   element: <PrivateRoute> <Dashboard></Dashboard></PrivateRoute>,
   children: [
     // normal user routes
-    
+    {
+      path: 'bookaparcel',
+      element: <BookAParcel></BookAParcel>
+    },
+
+
+    {
+      path: 'myparcels',
+      element:<MyParcels></MyParcels>
+    },
 
     // admin only routes
     
