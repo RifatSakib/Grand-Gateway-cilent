@@ -31,6 +31,26 @@ const AllUsers = () => {
             })
     }
 
+
+
+
+    const handleMakeDeliveryman = user => {
+        axiosSecure.patch(`/users/deliveryman/${user._id}`)
+            .then(res => {
+                console.log(res.data)
+                if (res.data.modifiedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: `${user.name} is an deliveryman Now!`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+    }
+
     const handleDeleteUser = user => {
         Swal.fire({
             title: "Are you sure?",
@@ -64,7 +84,7 @@ const AllUsers = () => {
                 <h2 className="text-3xl">All Users</h2>
                 <h2 className="text-3xl">Total Users: {users.length}</h2>
             </div>
-            <div className="overflow-x-auto">
+            <div className="">
                 <table className="table table-zebra w-full">
                     {/* head */}
                     <thead>
@@ -74,6 +94,7 @@ const AllUsers = () => {
                             <th>Email</th>
                             <th>Role</th>
                             <th>Action</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,13 +104,34 @@ const AllUsers = () => {
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
                                 <td>
-                                    {user.role === 'admin' ? 'Admin' : <button
-                                        onClick={() => handleMakeAdmin(user)}
-                                        className="btn btn-lg bg-orange-500">
-                                        <FaUsers className="text-white 
-                                        text-2xl"></FaUsers>
-                                    </button>}
+                                    {user.role === 'admin' ? 'Admin' :
+                                        user.role === 'deliveryman' ? 'deliveryman' :
+
+
+
+
+                                           "user"
+
+
+                                    }
+
+
+
                                 </td>
+
+                                <td>
+
+                                    
+                                <details className="dropdown">
+                                        <summary className=" btn btn-success m-1">Choose User Role</summary>
+                                        <ul className="menu dropdown-content bg-base-100 rounded-box z-30 w-52 p-2 shadow">
+                                        <li onClick={() => handleMakeAdmin(user)}><a>Admin</a></li>
+                                        <li onClick={() => handleMakeDeliveryman(user)}><a>Deliveryman</a></li>
+                                        </ul>
+                                      </details>
+                                </td>
+
+
                                 <td>
                                     <button
                                         onClick={() => handleDeleteUser(user)}
