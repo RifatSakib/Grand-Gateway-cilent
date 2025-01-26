@@ -1,105 +1,167 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../Providers/AuthProvider';
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import Swal from 'sweetalert2';
+import UseItems from '../../../Hooks/UseItems';
+import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import { Link } from 'react-router-dom';
 
 const MyParcels = () => {
 
+    const [book, , refetch] = UseItems();
+    const axiosSecure = UseAxiosSecure();
 
     const { user, logOut } = useContext(AuthContext);
-    
-        const currentDate = new Date().toLocaleDateString();
-    
+
+    const currentDate = new Date().toLocaleDateString();
+
+    const handleDeleteItem = (item) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.delete(`/menu/${item._id}`);
+                // console.log(res.data);
+                if (res.data.deletedCount > 0) {
+                    // refetch to update the ui
+                    refetch();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: `${item.name} has been deleted`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+
+
+            }
+        });
+    }
 
     return (
-        <div className='lg:w-3/4 mx-auto py-7'>
-        <div className="text-center">
-            <h1 className="text-5xl font-bold">Add Parcel</h1>
+        <div className=' w-8/12 flex flex-col'>
+            <div className="text-center">
+                <h1 className="text-5xl font-bold">My Parcel</h1>
 
-        </div>
-        <div className="card bg-base-100 w-full shrink-0 shadow-2xl">
-            <form className="card-body">
+            </div>
 
 
-                {/* form first row */}
-                <div className='flex flex-col lg:flex-row gap-5'>
-                    <div className="form-control flex-1">
-                        <label className="label">
-                            <span className="label-text">Parcel Type</span>
-                        </label>
-                        <input type="text" name='parcelType' placeholder="Parcel Type" className="input input-bordered" required />
-                    </div>
+            <div className="overflow-x-auto py-7  mx-auto">
+                    <table className="table ">
+                        {/* head */}
+                        <thead>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>Parcel Type</th>
+                                <th>Requested Delivery Date</th>
+                                <th>Approximate Delivery Date</th>
+                                <th>Booking Date</th>
+                                <th>Delivery Men ID</th>
+                                <th>Booking Status</th>
+                                <th>Update</th>
+                                <th>Cancel</th>
+                                <th>Review</th>
+                                <th>Pay</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                book.map((item, index) => <tr key={item._id}>
+                                    <td>
+                                        {index + 1}
+                                    </td>
 
-                    <div className="form-control flex-1">
-                        <label className="label">
-                            <span className="label-text">Requested Delivery Date</span>
-                        </label>
-                        <input type="date" name='requestedDeliveryDate' placeholder="Requested Delivery Date" className="input input-bordered" required />
-                    </div>
+
+                                    {/* <td>
+                                        <div className="flex items-center gap-3">
+                                            <div className="avatar">
+                                                <div className="mask mask-squircle w-12 h-12">
+                                                    <img src={item.name} alt="Avatar Tailwind CSS Component" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td> */}
+
+
+                                    <td>
+                                        {item.parcelType}
+                                    </td>
+                                    <td>
+                                        {item.requestedDeliveryDate}
+                                    </td>
+                                    <td>
+                                        {item.approximateDeliveryDate}
+                                    </td>
+                                    <td>
+                                        {currentDate}
+                                    </td>
+                                    <td>
+                                        { }
+                                    </td>
+
+                                    <td>
+                                        {item.status}
+                                    </td>
+
+
+                                    <td>
+                                        <Link to={`/dashboard/updateItem/${item._id}`}>
+                                            <button
+                                                className="btn btn-ghost btn-sm bg-yellow-500">
+                                               Update
+                                            </button>
+                                        </Link>
+                                    </td>
+
+
+                                    <td>
+                                        <button
+                                            onClick={() => handleDeleteItem(item)}
+                                            className="btn btn-error btn-sm ">
+                                            Cancel
+                                        </button>
+                                    </td>
+
+
+                                    <td>
+                                        <button
+                                            
+                                            className="btn btn-error btn-sm">
+                                            review
+                                        </button>
+                                    </td>
+
+                                    <td>
+                                        <button
+                                            
+                                            className="btn btn-error btn-sm">
+                                            pay
+                                        </button>
+                                    </td>
+
+                                </tr>)
+                            }
+                        </tbody>
+
+
+                    </table>
                 </div>
 
-
-                {/* form second row */}
-                <div className='flex flex-col lg:flex-row gap-5'>
-                    <div className="form-control flex-1">
-                        <label className="label">
-                            <span className="label-text">Approximate Delivery Date</span>
-                        </label>
-                        <input type="date" name='approximateDeliveryDate' placeholder="Approximate Delivery Date" className="input input-bordered" required />
-                    </div>
-
-                    <div className="form-control flex-1">
-                        <label className="label">
-                            <span className="label-text">Booking Date</span>
-                        </label>
-                        <input value={currentDate} type="text" name='bookingDate' placeholder="Booking Date" className="input input-bordered" required />
-                    </div>
-                </div>
-
-
-                {/* form third row */}
-                <div className='flex flex-col lg:flex-row gap-5'>
-                    <div className="form-control flex-1">
-                        <label className="label">
-                            <span className="label-text">Delivery Men ID</span>
-                        </label>
-                        <input type="text" name='deliveryMenID' placeholder="Delivery Men ID" className="input input-bordered" />
-                    </div>
-
-                    <div className="form-control flex-1">
-                        <label className="label">
-                            <span className="label-text">Booking Status</span>
-                        </label>
-                        <input type="text" name='bookingStatus' placeholder="Booking Status" className="input input-bordered" required />
-                    </div>
-                </div>
-
-
-
-                <div className="form-control mt-6 col-span-2">
-                        <button className="btn btn-primary">Add Equipment</button>
-                    </div>
-
-
-
-
-            </form>
 
             
-            <div className='grid grid-cols-2 gap-2 px-7 py-2 mt-0 '>
-                    <div className="form-control ">
-                        <button className="btn btn-primary">Update</button>
-                    </div>
-                    <div className="form-control ">
-                        <button className="btn btn-primary">Cancel</button>
-                    </div>
-                    <div className="form-control ">
-                        <button className="btn btn-primary">Review</button>
-                    </div>
-                    <div className="form-control ">
-                        <button className="btn btn-primary">Pay</button>
-                    </div>
-                                        </div>
+
+
+            
         </div>
-    </div>
     );
 };
 

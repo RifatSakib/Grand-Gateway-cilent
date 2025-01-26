@@ -1,22 +1,30 @@
 import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../../../Providers/AuthProvider';
 import { useForm } from 'react-hook-form';
-import { FaBicycle, FaBoxOpen, FaUtensils } from 'react-icons/fa';
-import Swal from 'sweetalert2';
+import { useLoaderData } from 'react-router-dom';
+import { FaBicycle } from 'react-icons/fa';
+import UseAxiosPublic from '../../../Hooks/UseAxiosPublic';
 import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import Swal from 'sweetalert2';
 
-const BookAParcel = () => {
+const UpdateItems = () => {
 
-    const { user, logOut } = useContext(AuthContext);
+const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliveryAddress, requestedDeliveryDate, deliveryAddressLatitude, deliveryAddresslongitude } = useLoaderData();
+
+// console.log(phone, _id, status)
+
+    const { user } = useContext(AuthContext);
     const currentDate = new Date().toLocaleDateString();
-    const { register, handleSubmit, reset, watch, setValue } = useForm();
+    const { register, handleSubmit, reset, watch,setValue } = useForm();
+    const axiosPublic = UseAxiosPublic();
     const axiosSecure = UseAxiosSecure();
 
 
 
-    // // Watch the parcel weight to calculate price
-    // const parcelWeight = watch('parcelWeight', 0);
-    // const price = calculatePrice(parcelWeight);
+   // Watch the parcel weight to calculate price
+//    const parcelWeight = watch('parcelWeight', 0);
+//    const price = calculatePrice(parcelWeight);
+
 
     const parcelWeight = watch('parcelWeight', 0);
    
@@ -25,58 +33,61 @@ const BookAParcel = () => {
         setValue('price', price); // Update the price field in the form
     }, [parcelWeight, setValue]);
 
-    function calculatePrice(weight) {
-        if (weight <= 1) return 50;
-        if (weight > 1 && weight <= 2) return 100;
-        return 150;
-    }
-
-    const onSubmit = async (data) => {
-
-        console.log(data)
+   function calculatePrice(weight) {
+       if (weight <= 1) return 50;
+       if (weight>1 && weight<= 2) return 100;
+       return 150;
+   }
 
 
-
-        const bookItem = {
-            name: data.name,
-            email: data.email,
-            price: parseFloat(data.price),
-            phone: data.phone,
-            parcelType: data.parcelType,
-            parcelWeight: data.parcelWeight,
-            receiverName: data.receiverName,
-            receiverPhoneNumber: data.receiverPhoneNumber,
-            parcelDeliveryAddress: data.parcelDeliveryAddress,
-            requestedDeliveryDate: data.requestedDeliveryDate,
-            deliveryAddressLatitude: data.deliveryAddressLatitude,
-            deliveryAddresslongitude: data.deliveryAddresslongitude,
-            status: "pending", //default
-        }
-
-        const bookRes = await axiosSecure.post('/book', bookItem);
-        console.log(bookRes.data)
-        if (bookRes.data.insertedId) {
+     const onSubmit = async (data) => {
+   
+           console.log(data)
+   
+   
+   
+           const bookItem = {
+               name: data.name,
+               email: data.email,
+               price: parseFloat(data.price),
+               phone: data.phone,
+               parcelType: data.parcelType,
+               parcelWeight: data.parcelWeight,
+               receiverName: data.receiverName,
+               receiverPhoneNumber: data.receiverPhoneNumber,
+               parcelDeliveryAddress: data.parcelDeliveryAddress,
+               requestedDeliveryDate: data.requestedDeliveryDate,
+               deliveryAddressLatitude: data.deliveryAddressLatitude,
+               deliveryAddresslongitude: data.deliveryAddresslongitude,
+              
+           }
+   
+           const bookRes = await axiosSecure.patch(`/book/${_id}`, bookItem);
+           console.log(bookRes.data)
+           if(bookRes.data.modifiedCount > 0){
             // show success popup
-            reset();
+            // reset();
             Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: `${data.name} is added to the book list.`,
+                title: `${data.name} is updated to the menu.`,
                 showConfirmButton: false,
                 timer: 1500
-            });
+              });
         }
+   
+       }
+   
 
-    }
 
     return (
         <div>
             <div className="text-center">
-                <h1 className="text-5xl font-bold">Add Parcel</h1>
+                <h1 className="text-5xl font-bold">Update Parcel</h1>
 
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className='grid grid-cols-2 gap-2'>
+            <form  onSubmit={handleSubmit(onSubmit)} className='grid grid-cols-2 gap-2'>
                 {/* name */}
                 <div className="form-control w-full my-1">
 
@@ -155,6 +166,7 @@ const BookAParcel = () => {
                     </label>
                     <input
                         type="tel"
+                        defaultValue={phone}
                         placeholder="Phone Number"
                         {...register('phone', { required: true })}
                         className="input input-bordered w-full" />
@@ -168,19 +180,21 @@ const BookAParcel = () => {
                     </label>
                     <input
                         type="text"
+                        defaultValue={parcelType}
                         placeholder="Parcel Type"
                         {...register('parcelType', { required: true })}
                         className="input input-bordered w-full" />
                 </div>
 
-                {/* Parcel Weight*/}
+                      {/* Parcel Weight*/}
 
-                <div className="form-control w-full ">
+                      <div className="form-control w-full ">
                     <label className="label">
                         <span className="label-text">Parcel Weight</span>
                     </label>
                     <input
                         type="number"
+                        defaultValue={parcelWeight}
                         placeholder="Parcel Weight"
                         {...register('parcelWeight', { required: true })}
                         className="input input-bordered w-full" />
@@ -195,6 +209,7 @@ const BookAParcel = () => {
                     </label>
                     <input
                         type="text"
+                        defaultValue={receiverName}
                         placeholder="Receiver’s Name"
                         {...register('receiverName', { required: true })}
                         className="input input-bordered w-full" />
@@ -208,6 +223,7 @@ const BookAParcel = () => {
                     </label>
                     <input
                         type="tel"
+                        defaultValue={receiverPhoneNumber}
                         placeholder="Receiver's Phone Number"
                         {...register('receiverPhoneNumber', { required: true })}
                         className="input input-bordered w-full" />
@@ -221,6 +237,7 @@ const BookAParcel = () => {
                     </label>
                     <input
                         type="text"
+                        defaultValue={parcelDeliveryAddress}
                         placeholder="Parcel Delivery Address"
                         {...register('parcelDeliveryAddress', { required: true })}
                         className="input input-bordered w-full" />
@@ -234,6 +251,7 @@ const BookAParcel = () => {
                     </label>
                     <input
                         type="date"
+                        defaultValue={requestedDeliveryDate}
                         placeholder="Requested Delivery Date"
                         {...register('requestedDeliveryDate', { required: true })}
                         className="input input-bordered w-full" />
@@ -247,6 +265,7 @@ const BookAParcel = () => {
                     </label>
                     <input
                         type="number"
+                        defaultValue={deliveryAddressLatitude}
                         placeholder="Delivery Address Latitude"
                         {...register('deliveryAddressLatitude', { required: true })}
                         className="input input-bordered w-full" />
@@ -260,6 +279,7 @@ const BookAParcel = () => {
                     </label>
                     <input
                         type="number"
+                        defaultValue={deliveryAddresslongitude}
                         placeholder="Delivery Address longitude"
                         {...register('deliveryAddresslongitude', { required: true })}
                         className="input input-bordered w-full" />
@@ -283,12 +303,11 @@ const BookAParcel = () => {
                 </div>
 
                 <button className="btn btn-success col-span-2">
-                    Book <FaBicycle className="ml-4"></FaBicycle>
+                    Update <FaBicycle className="ml-4"></FaBicycle>
                 </button>
             </form>
         </div>
-
     );
 };
 
-export default BookAParcel;
+export default UpdateItems;
