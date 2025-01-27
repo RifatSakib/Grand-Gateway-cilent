@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 const MyParcels = () => {
 
-    const [book, , refetch] = UseItems();
+    const [book, refetch] = UseItems();
     const axiosSecure = UseAxiosSecure();
 
     const { user, logOut } = useContext(AuthContext);
