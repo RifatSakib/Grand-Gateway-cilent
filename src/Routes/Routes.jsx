@@ -13,6 +13,8 @@ import AdminRoute from './AdminRoute';
 import BookAParcel from '../Pages/Dashboard/BookAParcel/BookAParcel';
 import MyParcels from '../Pages/Dashboard/MyParcels/MyParcels';
 import UpdateItems from '../Pages/Dashboard/UpdateItems/UpdateItems';
+// import Myorofile from '../Pages/Dashboard/MyProfile/Myorofile';
+import MyProfile from '../Pages/Dashboard/MyProfile/MyProfile';
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +59,14 @@ export const router = createBrowserRouter([
       element: <UpdateItems></UpdateItems>,
       loader: ({params}) => fetch(`http://localhost:5000/book/${params.id}`)
     },
+
+    
+    {
+      path: 'myprofile',
+      element: <MyProfile></MyProfile>
+    },
+
+
 
     // admin only routes
     
