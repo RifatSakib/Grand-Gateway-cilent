@@ -6,6 +6,8 @@ import '../../../App.css'
 import logo from "../../../assets/motorbike.png"
 import { AuthContext } from '../../../Providers/AuthProvider';
 import '../../../App.css'
+import UseAdmin from '../../../Hooks/UseAdmin';
+import UseDeliveryman from '../../../Hooks/UseDeliveryman';
 
 
 
@@ -14,6 +16,9 @@ const Navbar = () => {
 
   const { user, logOut } = useContext(AuthContext);
   console.log(user);
+  const [isAdmin] = UseAdmin();
+  const [isDeliveryman] = UseDeliveryman();
+
 
   const handleLogOut = () => {
     logOut()
@@ -72,13 +77,32 @@ const Navbar = () => {
           <div className=" ">
             {user && user?.email ? (
               <div>
-               
+
 
                 <details className="dropdown leading-none  ">
                   <summary className="border-none m-1 p-0 outline-none"> <img className="w-10 rounded-full" src={user?.photoURL} alt="" /></summary>
                   <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-36 p-2 shadow">
-                   <li className=' cursor-not-allowed bg-none pl-3 '>{user.displayName}</li>
-                    <Link to="/dashboard"> <li><a>Dashboard</a></li></Link>
+                    <li className=' cursor-not-allowed bg-none pl-3 '>{user.displayName}</li>
+
+
+                    {
+                      user && isAdmin && <li><Link to="/dashboard/users">Dashboard</Link></li>
+                    }
+
+                    {
+                      user && isDeliveryman && <li><Link to="/dashboard">Dashboard</Link></li>
+                    }
+                    
+                    {
+                      user && !isDeliveryman && !isAdmin && <li><Link to="/dashboard/bookaparcel">Dashboard</Link></li>
+                    }
+
+
+
+                    {/* <Link to="/dashboard"> <li><a>Dashboard</a></li></Link> */}
+
+
+
                     <Link to="/"> <li onClick={handleLogOut}><a>Log-Out</a></li></Link>
                   </ul>
                 </details>
@@ -92,20 +116,20 @@ const Navbar = () => {
           </div>
 
 
-          {user && user?.email ? 
-          
-          (
-            // <button onClick={handleLogOut} className="btn btn-neutral rounded-none">
-            //   Log-Out
-            // </button>
-            <></>
-          ) :
-          
-          (
-            <Link to="/login" className="btn btn-neutral rounded-none text-white">
-              Login
-            </Link>
-          )}
+          {user && user?.email ?
+
+            (
+              // <button onClick={handleLogOut} className="btn btn-neutral rounded-none">
+              //   Log-Out
+              // </button>
+              <></>
+            ) :
+
+            (
+              <Link to="/login" className="btn btn-neutral rounded-none text-white">
+                Login
+              </Link>
+            )}
 
 
 
