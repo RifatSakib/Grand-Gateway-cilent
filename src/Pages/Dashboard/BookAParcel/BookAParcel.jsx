@@ -168,7 +168,7 @@ const BookAParcel = () => {
                         <span className="label-text">Booking Date</span>
                     </label>
                     <input
-                        type="tel"
+                        type="date"
                         defaultValue={currentDate}
                         readOnly
                         placeholder="Booking Date"
