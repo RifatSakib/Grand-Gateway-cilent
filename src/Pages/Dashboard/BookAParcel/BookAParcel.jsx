@@ -42,6 +42,7 @@ const BookAParcel = () => {
             email: data.email,
             price: parseFloat(data.price),
             phone: data.phone,
+            bookingDate: data.bookingDate,
             parcelType: data.parcelType,
             parcelWeight: data.parcelWeight,
             receiverName: data.receiverName,
@@ -157,6 +158,21 @@ const BookAParcel = () => {
                         type="tel"
                         placeholder="Phone Number"
                         {...register('phone', { required: true })}
+                        className="input input-bordered w-full" />
+                </div>
+
+                   {/* Booking date */}
+
+                   <div className="form-control w-full ">
+                    <label className="label">
+                        <span className="label-text">Booking Date</span>
+                    </label>
+                    <input
+                        type="tel"
+                        defaultValue={currentDate}
+                        readOnly
+                        placeholder="Booking Date"
+                        {...register('bookingDate', { required: true })}
                         className="input input-bordered w-full" />
                 </div>
 

@@ -15,6 +15,7 @@ import MyParcels from '../Pages/Dashboard/MyParcels/MyParcels';
 import UpdateItems from '../Pages/Dashboard/UpdateItems/UpdateItems';
 // import Myorofile from '../Pages/Dashboard/MyProfile/Myorofile';
 import MyProfile from '../Pages/Dashboard/MyProfile/MyProfile';
+import AllParcels from '../Pages/Dashboard/AllParcels/AllParcels';
 
 export const router = createBrowserRouter([
   {
@@ -71,8 +72,15 @@ export const router = createBrowserRouter([
     // admin only routes
     
     {
-      path: 'users',
+      path: 'allUsers',
       element: <AdminRoute> <AllUsers></AllUsers> </AdminRoute> 
+    },
+
+
+     
+    {
+      path: 'allParcels',
+      element: <AdminRoute> <AllParcels></AllParcels> </AdminRoute> 
     }
 
   ]

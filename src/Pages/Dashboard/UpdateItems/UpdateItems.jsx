@@ -62,7 +62,7 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
               
            }
    
-           const bookRes = await axiosSecure.patch(`/book/${_id}`, bookItem);
+           const bookRes = await axiosSecure.put(`/book/${_id}`, bookItem);
            console.log(bookRes.data)
            if(bookRes.data.modifiedCount > 0){
             // show success popup
