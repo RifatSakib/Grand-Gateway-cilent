@@ -15,6 +15,7 @@ const MyParcels = () => {
 
     const currentDate = new Date().toLocaleDateString();
 
+    console.log(book)
     const handleDeleteItem = (item) => {
         Swal.fire({
             title: "Are you sure?",
@@ -93,23 +94,23 @@ const MyParcels = () => {
 
 
                                     <td>
-                                        {item.parcelType}
+                                        {item?.parcelType}
                                     </td>
                                     <td>
-                                        {item.requestedDeliveryDate}
+                                        {item?.requestedDeliveryDate}
                                     </td>
                                     <td>
-                                        {item.approximateDeliveryDate}
+                                        {item?.approximateDate}
                                     </td>
                                     <td>
                                         {currentDate}
                                     </td>
                                     <td>
-                                        { }
+                                        { item?.deliveryMan_Id}
                                     </td>
 
                                     <td>
-                                        {item.status}
+                                        {item?.status}
                                     </td>
 
 
