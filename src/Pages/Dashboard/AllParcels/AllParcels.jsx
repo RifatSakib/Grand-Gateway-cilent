@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
+
 
 const AllParcels = () => {
     const axiosSecure = UseAxiosSecure();
@@ -20,7 +22,7 @@ const AllParcels = () => {
         setSelectedItem(null); // Reset selected item when closing the modal
     };
 
-    const { data: book = [] } = useQuery({
+    const { data: book = [], refetch } = useQuery({
         queryKey: ['book'],
         queryFn: async () => {
             const res = await axiosSecure.get('/book/all');
@@ -43,18 +45,44 @@ const AllParcels = () => {
         setIsOpen(true); // Open the modal
     };
 
-    const handleDateChange = (e) => {
-        console.log(e)
-        setApproximateDate(e);
-    }
 
 
-   
+
+
 
     const onSubmit = async (data) => {
+
         console.log(data.deliveryMan); // Handle form submission
         console.log(data.approximateDate); // Handle form submission
-        console.log(bookID);
+        console.log(typeof(bookID));
+
+
+
+        // const status = 'In Progress'
+        try {
+            // update order status
+            await axiosSecure.patch(`/book/${bookID}`, {
+                
+                deliveryMan_Id : data.deliveryMan,
+                approximateDate : data.approximateDate,
+
+            })
+            // call refetch to refresh ui(fetch orders data again)
+            refetch()
+            
+            Swal.fire({
+                                    position: "top-end",
+                                    icon: "success",
+                                    title: `Proterties Updated`,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+
+
+        } catch (err) {
+            console.log(err)
+            toast.error(err.response.data)
+        }
 
     };
 
@@ -148,11 +176,6 @@ const AllParcels = () => {
                             {/* Submit Button */}
                             <button type="submit" className="btn btn-primary">Submit</button>
                         </form>
-
-
-
-
-
 
                         <div className="modal-action">
                             <button className="btn" onClick={closeModal}>Close</button>
