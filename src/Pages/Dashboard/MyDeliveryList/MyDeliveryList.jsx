@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../../Providers/AuthProvider';
 import UseDeliveryman from '../../../Hooks/UseDeliveryman';
 import UseAuth from '../../../Hooks/UseAuth';
 import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
 
 const MyDeliveryList = () => {
 
@@ -12,6 +14,8 @@ const MyDeliveryList = () => {
     //   const [isDeliveryman] = UseDeliveryman();
 
     //   console.log(isDeliveryman)
+
+    // const [selectedItem, setSelectedItem] = useState(null); // State to hold the selected item
 
 
 
@@ -49,7 +53,7 @@ const MyDeliveryList = () => {
     // })
 
 
-    const { data: bookByDeliveryId = [], isLoading: isBooksLoading } = useQuery({
+    const { data: bookByDeliveryId = [], isLoading: isBooksLoading,refetch } = useQuery({
         queryKey: [deliveryman?._id, 'bookByDeliveryId'],
         enabled: !!deliveryman?._id, // Ensure deliveryman ID is available
         queryFn: async () => {
@@ -64,9 +68,37 @@ const MyDeliveryList = () => {
 
     console.log(bookByDeliveryId)
 
-    console.log(deliveryman._id)
+    // console.log(deliveryman._id)
 
 
+
+
+    const handleCancel = async (item) => {
+        console.log(item._id)
+
+
+            try {
+                // update order status
+                await axiosSecure.patch(`/book/cancel/${item._id}`,)
+                // call refetch to refresh ui(fetch orders data again)
+                refetch()
+
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: `Proterties Updated`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+
+            } catch (err) {
+                console.log(err)
+                toast.error(err.response.data)
+            }
+        
+
+    }
 
 
 
@@ -89,6 +121,7 @@ const MyDeliveryList = () => {
                             <th>Approximate Delivery Date</th>
                             <th>Receivers phone number</th>
                             <th>Receivers Address</th>
+                            <th>status</th>
                             <th>View Location</th>
                             <th>Cancel</th>
                             <th>Deliver</th>
@@ -96,7 +129,8 @@ const MyDeliveryList = () => {
                     </thead>
                     <tbody>
                         {bookByDeliveryId.map((item, index) => (
-                            <tr key={item._id}>
+                            <tr key={item._id} >
+                               
                                 <td>{index + 1}</td>
                                 <td>{item.name}</td>
                                 <td>{item.receiverName}</td>
@@ -105,21 +139,26 @@ const MyDeliveryList = () => {
                                 <td>{item.approximateDate}</td>
                                 <td>{item.receiverPhoneNumber}</td>
                                 <td>{item.parcelDeliveryAddress}</td>
+                                <td>{item.status}</td>
                                 <td>
                                     <button
-                                    className="btn btn-success btn-sm">
+                                        className="btn btn-success btn-sm">
                                         view location
                                     </button>
                                 </td>
                                 <td>
                                     <button
-                                    className="btn btn-success btn-sm">
+                                        onClick={() => {
+                                            handleCancel(item)
+                                           
+                                        }}
+                                        className="btn btn-success btn-sm">
                                         cancel
                                     </button>
                                 </td>
                                 <td>
                                     <button
-                                    className="btn btn-success btn-sm">
+                                        className="btn btn-success btn-sm">
                                         Deliver
                                     </button>
                                 </td>
@@ -129,7 +168,7 @@ const MyDeliveryList = () => {
                 </table>
             </div>
 
-                
+
         </div>
     );
 };
