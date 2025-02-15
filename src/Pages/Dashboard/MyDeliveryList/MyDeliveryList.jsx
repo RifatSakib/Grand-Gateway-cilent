@@ -103,6 +103,36 @@ const MyDeliveryList = () => {
 
 
 
+    const handleDeliver = async (item) => {
+        console.log(item._id)
+
+
+            try {
+                // update order status
+                await axiosSecure.patch(`/book/deliver/${item._id}`,)
+                // call refetch to refresh ui(fetch orders data again)
+                refetch()
+
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: `Proterties Updated`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+
+            } catch (err) {
+                console.log(err)
+                toast.error(err.response.data)
+            }
+        
+
+    }
+
+
+
+
     return (
         <div className='w-8/12 flex flex-col w-full relative'>
             <div className="text-center">
@@ -142,7 +172,7 @@ const MyDeliveryList = () => {
                                 <td>{item.status}</td>
                                 <td>
                                     <button
-                                        className="btn btn-success btn-sm">
+                                        className="btn btn-outline btn-sm">
                                         view location
                                     </button>
                                 </td>
@@ -152,12 +182,16 @@ const MyDeliveryList = () => {
                                             handleCancel(item)
                                            
                                         }}
-                                        className="btn btn-success btn-sm">
+                                        className="btn btn-error btn-sm">
                                         cancel
                                     </button>
                                 </td>
                                 <td>
                                     <button
+                                     onClick={() => {
+                                        handleDeliver(item)
+                                       
+                                    }}
                                         className="btn btn-success btn-sm">
                                         Deliver
                                     </button>
