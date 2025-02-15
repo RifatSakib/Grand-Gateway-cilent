@@ -90,7 +90,7 @@ const Navbar = () => {
                     }
 
                     {
-                      user && isDeliveryman && <li><Link to="/dashboard">Dashboard</Link></li>
+                      user && isDeliveryman && <li><Link to="/dashboard/myDeliveryList">Dashboard</Link></li>
                     }
                     
                     {

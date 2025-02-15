@@ -77,25 +77,39 @@ const MyDeliveryList = () => {
         console.log(item._id)
 
 
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, cancel it!"
+        });
+    
+        // Check if the user confirmed the action
+        if (result.isConfirmed) {
             try {
-                // update order status
-                await axiosSecure.patch(`/book/cancel/${item._id}`,)
-                // call refetch to refresh ui(fetch orders data again)
-                refetch()
-
+                // Update order status
+                await axiosSecure.patch(`/book/cancel/${item._id}`);
+                
+                // Call refetch to refresh UI (fetch orders data again)
+                refetch(); // Ensure refetch is defined in the scope
+    
+                // Show success message
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: `Proterties Updated`,
+                    title: `Properties Updated`,
                     showConfirmButton: false,
                     timer: 1500
                 });
-
-
             } catch (err) {
-                console.log(err)
-                toast.error(err.response.data)
+                console.error(err);
+                toast.error(err.response?.data || "An error occurred");
             }
+        }
+
         
 
     }
@@ -107,25 +121,38 @@ const MyDeliveryList = () => {
         console.log(item._id)
 
 
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, deliver it!"
+        });
+    
+        // Check if the user confirmed the action
+        if (result.isConfirmed) {
             try {
-                // update order status
-                await axiosSecure.patch(`/book/deliver/${item._id}`,)
-                // call refetch to refresh ui(fetch orders data again)
-                refetch()
-
+                // Update order status
+                await axiosSecure.patch(`/book/deliver/${item._id}`);
+                
+                // Call refetch to refresh UI (fetch orders data again)
+                refetch(); // Ensure refetch is defined in the scope
+    
+                // Show success message
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: `Proterties Updated`,
+                    title: `Properties Updated`,
                     showConfirmButton: false,
                     timer: 1500
                 });
-
-
             } catch (err) {
-                console.log(err)
-                toast.error(err.response.data)
+                console.error(err);
+                toast.error(err.response?.data || "An error occurred");
             }
+        }
         
 
     }
