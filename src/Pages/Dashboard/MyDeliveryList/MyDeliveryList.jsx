@@ -129,7 +129,7 @@ const MyDeliveryList = () => {
                 </table>
             </div>
 
-           
+                
         </div>
     );
 };
