@@ -16,6 +16,7 @@ import UpdateItems from '../Pages/Dashboard/UpdateItems/UpdateItems';
 // import Myorofile from '../Pages/Dashboard/MyProfile/Myorofile';
 import MyProfile from '../Pages/Dashboard/MyProfile/MyProfile';
 import AllParcels from '../Pages/Dashboard/AllParcels/AllParcels';
+import MyDeliveryList from '../Pages/Dashboard/MyDeliveryList/MyDeliveryList';
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +66,15 @@ export const router = createBrowserRouter([
     {
       path: 'myprofile',
       element: <MyProfile></MyProfile>
+    },
+
+
+
+    // deliveryman
+
+    {
+      path: 'myDeliveryList',
+      element: <MyDeliveryList></MyDeliveryList>
     },
 
 

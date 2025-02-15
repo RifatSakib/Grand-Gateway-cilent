@@ -49,12 +49,12 @@ const Dashboard = () => {
                             isDeliveryman?
                             <>
                               <li>
-                                    <NavLink to="/dashboard/userHome">
+                                    <NavLink to="/dashboard/myDeliveryList">
                                         <FaHome></FaHome>
                                         My Delivery List</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/dashboard/history">
+                                    <NavLink to="/dashboard/myReview">
                                         <FaCalendar></FaCalendar>
                                         My Reviews</NavLink>
                                 </li>
