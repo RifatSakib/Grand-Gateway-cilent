@@ -9,7 +9,7 @@ import SocialLogin from "../../components/SocialLogin/SocialLogin";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const SignUp = () => {
-    const axiosPublic = useAxiosPublic();
+    const axiosPublic = UseAxiosPublic();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();

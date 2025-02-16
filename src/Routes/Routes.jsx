@@ -17,6 +17,7 @@ import UpdateItems from '../Pages/Dashboard/UpdateItems/UpdateItems';
 import MyProfile from '../Pages/Dashboard/MyProfile/MyProfile';
 import AllParcels from '../Pages/Dashboard/AllParcels/AllParcels';
 import MyDeliveryList from '../Pages/Dashboard/MyDeliveryList/MyDeliveryList';
+import MyReviews from '../Pages/Dashboard/MyReviews/MyReviews';
 
 export const router = createBrowserRouter([
   {
@@ -76,6 +77,14 @@ export const router = createBrowserRouter([
       path: 'myDeliveryList',
       element: <MyDeliveryList></MyDeliveryList>
     },
+
+    {
+      path: 'myReview',
+      element: <MyReviews></MyReviews>
+    },
+
+
+    
 
 
 
