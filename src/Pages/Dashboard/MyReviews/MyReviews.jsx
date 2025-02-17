@@ -74,7 +74,7 @@ const MyReviews = () => {
 
 
                     </div>
-                    <p className="text-sm text-justify"> <span className='text-gray-500'>Feedback:</span> <br /> {item.feedBack}</p>
+                    <p className="text-sm text-justify overflow-y-auto h-24"> <span className='text-gray-500'>Feedback:</span> <br /> {item.feedBack}</p>
 
                 </div>
                     )
