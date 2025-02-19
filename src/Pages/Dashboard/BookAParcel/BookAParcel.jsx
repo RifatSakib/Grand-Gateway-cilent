@@ -8,11 +8,11 @@ import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 const BookAParcel = () => {
 
     const { user, logOut } = useContext(AuthContext);
-    const currentDate = new Date().toLocaleDateString();
+    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
     const { register, handleSubmit, reset, watch, setValue } = useForm();
     const axiosSecure = UseAxiosSecure();
 
-
+console.log(currentDate)
 
     // // Watch the parcel weight to calculate price
     // const parcelWeight = watch('parcelWeight', 0);

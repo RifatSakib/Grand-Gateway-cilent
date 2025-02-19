@@ -86,7 +86,7 @@ const Navbar = () => {
 
 
                     {
-                      user && isAdmin && <li><Link to="/dashboard/allUsers">Dashboard</Link></li>
+                      user && isAdmin && <li><Link to="/dashboard/statistics">Dashboard</Link></li>
                     }
 
                     {
