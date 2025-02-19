@@ -5,7 +5,6 @@ import Error from '../Pages/Shared/Error/Error';
 import Home from '../Pages/Home/Home/Home';
 import Login from '../Pages/Login/Login';
 import SignUp from '../Pages/SignUp/SignUp';
-// import Dashboard from '../Pages/Dashboard/Dashboard';
 import PrivateRoute from './PrivateRoute';
 import Dashboard from '../Layout/Dashboard';
 import AllUsers from '../Pages/Dashboard/AllUsers/AllUsers';
@@ -13,12 +12,12 @@ import AdminRoute from './AdminRoute';
 import BookAParcel from '../Pages/Dashboard/BookAParcel/BookAParcel';
 import MyParcels from '../Pages/Dashboard/MyParcels/MyParcels';
 import UpdateItems from '../Pages/Dashboard/UpdateItems/UpdateItems';
-// import Myorofile from '../Pages/Dashboard/MyProfile/Myorofile';
 import MyProfile from '../Pages/Dashboard/MyProfile/MyProfile';
 import AllParcels from '../Pages/Dashboard/AllParcels/AllParcels';
 import MyDeliveryList from '../Pages/Dashboard/MyDeliveryList/MyDeliveryList';
 import MyReviews from '../Pages/Dashboard/MyReviews/MyReviews';
 import AllDeliveryMan from '../Pages/Dashboard/AllDeliveryMan/AllDeliveryMan';
+import AdminStatistics from '../Pages/Dashboard/Statistics/AdminStatistics';
 
 export const router = createBrowserRouter([
   {
@@ -106,6 +105,11 @@ export const router = createBrowserRouter([
     {
       path: 'allDeliveryman',
       element: <AdminRoute> <AllDeliveryMan></AllDeliveryMan> </AdminRoute> 
+    },
+    
+    {
+      path: 'statistics',
+      element: <AdminRoute> <AdminStatistics></AdminStatistics> </AdminRoute> 
     }
 
 
