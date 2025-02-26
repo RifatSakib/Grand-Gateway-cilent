@@ -178,7 +178,6 @@ const MyDeliveryList = () => {
                             <th>Approximate Delivery Date</th>
                             <th>Receivers phone number</th>
                             <th>Receivers Address</th>
-                            <th>status</th>
                             <th>View Location</th>
                             <th>Cancel</th>
                             <th>Deliver</th>
@@ -196,7 +195,6 @@ const MyDeliveryList = () => {
                                 <td>{item.approximateDate}</td>
                                 <td>{item.receiverPhoneNumber}</td>
                                 <td>{item.parcelDeliveryAddress}</td>
-                                <td>{item.status}</td>
                                 <td>
                                     <button
                                         className="btn btn-outline btn-sm">
