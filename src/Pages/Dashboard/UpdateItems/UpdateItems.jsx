@@ -56,18 +56,18 @@ console.log(book)
     }, [book, setValue]);
 
 
-    // const parcelWeight = watch('parcelWeight', 0);
+    const parcelWeight = watch('parcelWeight', 0);
 
-    // useEffect(() => {
-    //     const price = calculatePrice(parcelWeight);
-    //     setValue('price', price); // Update the price field in the form
-    // }, [parcelWeight, setValue]);
+    useEffect(() => {
+        const price = calculatePrice(parcelWeight);
+        setValue('price', price); // Update the price field in the form
+    }, [parcelWeight, setValue]);
 
-    // function calculatePrice(weight) {
-    //     if (weight <= 1) return 50;
-    //     if (weight > 1 && weight <= 2) return 100;
-    //     return 150;
-    // }
+    function calculatePrice(weight) {
+        if (weight <= 1) return 50;
+        if (weight > 1 && weight <= 2) return 100;
+        return 150;
+    }
 
 
     const onSubmit = async (data) => {
@@ -284,6 +284,7 @@ console.log(book)
 
                     <input
                         type="number"
+                        value={watch('price')}
                         readOnly
                         placeholder="Price"
                         {...register('price', { required: true })}

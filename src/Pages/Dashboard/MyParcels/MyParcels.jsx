@@ -20,7 +20,7 @@ const MyParcels = () => {
 
 
     const { data: book = [], isPending: loading, refetch } = useQuery({
-        queryKey: ['tutor',user.email],
+        queryKey: ['tutor', user.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/book/email/${user.email}`);
 
@@ -44,16 +44,16 @@ const MyParcels = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, cancel it!"
         });
-    
+
         // Check if the user confirmed the action
         if (result.isConfirmed) {
             try {
                 // Update order status
                 await axiosSecure.patch(`/book/cancel/${item._id}`);
-                
+
                 // Call refetch to refresh UI (fetch orders data again)
                 refetch(); // Ensure refetch is defined in the scope
-    
+
                 // Show success message
                 Swal.fire({
                     position: "top-end",
@@ -68,7 +68,7 @@ const MyParcels = () => {
             }
         }
 
-        
+
 
     }
 
@@ -212,7 +212,7 @@ const MyParcels = () => {
                                 <td>
                                     <Link to={`/dashboard/updateItem/${item._id}`}>
                                         <button
-                                            className="btn btn-ghost btn-sm bg-yellow-500">
+                                            className="btn btn-ghost btn-xs bg-yellow-500">
                                             Update
                                         </button>
                                     </Link>
@@ -220,27 +220,52 @@ const MyParcels = () => {
 
 
                                 <td>
-                                    <button
-                                        onClick={() => handleCancel(item)}
-                                        className="btn btn-error btn-sm ">
-                                        Cancel
-                                    </button>
+
+                                    {item?.status === "pending" ? (
+
+                                        <button
+                                            onClick={() => handleCancel(item)}
+                                            className="btn btn-error btn-xs ">
+                                            Cancel
+                                        </button>
+                                        ):(
+
+                                            <button
+                                            onClick={() => handleCancel(item)}
+                                            className="btn btn-error btn-xs " disabled>
+                                            Cancel
+                                        </button>
+                                        )
+                                    
+                                }
+
                                 </td>
 
 
                                 <td>
+
+                                {item?.status === "delivered" ? (
+
                                     <button
 
                                         onClick={() => handleReview(item)}
-                                        className="btn btn-error btn-sm">
+                                        className="btn btn-success btn-xs">
                                         review
                                     </button>
+                                ):(
+                                    <button
+
+                                        onClick={() => handleReview(item)}
+                                        className="btn btn-success btn-xs hidden">
+                                        review
+                                    </button>
+                                )}
                                 </td>
 
                                 <td>
                                     <button
 
-                                        className="btn btn-error btn-sm">
+                                        className="btn btn-accent btn-xs">
                                         pay
                                     </button>
                                 </td>
