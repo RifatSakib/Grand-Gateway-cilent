@@ -1,70 +1,100 @@
 import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../../../Providers/AuthProvider';
 import { useForm } from 'react-hook-form';
-import { useLoaderData } from 'react-router-dom';
-import { FaBicycle } from 'react-icons/fa';
+import { useParams } from 'react-router-dom';
 import UseAxiosPublic from '../../../Hooks/UseAxiosPublic';
 import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 import Swal from 'sweetalert2';
+import { useQuery } from '@tanstack/react-query';
+import { FaBicycle } from 'react-icons/fa';
 
 const UpdateItems = () => {
 
-const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliveryAddress, requestedDeliveryDate, deliveryAddressLatitude, deliveryAddresslongitude } = useLoaderData();
-
-// console.log(phone, _id, status)
+    const params = useParams();
+    console.log(params.id)
 
     const { user } = useContext(AuthContext);
+
+
+
+
+
     const currentDate = new Date().toLocaleDateString();
-    const { register, handleSubmit, reset, watch,setValue } = useForm();
+    const { register, handleSubmit, reset, watch, setValue } = useForm();
     const axiosPublic = UseAxiosPublic();
     const axiosSecure = UseAxiosSecure();
 
 
+    const { data: book = [], isPending: loading, refetch } = useQuery({
+        queryKey: ['book', user?.email],
+        enabled: !!params.id,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/book/${params.id}`);
+            return res.data;
+        }
+    });
 
-   // Watch the parcel weight to calculate price
-//    const parcelWeight = watch('parcelWeight', 0);
-//    const price = calculatePrice(parcelWeight);
-
-
-    const parcelWeight = watch('parcelWeight', 0);
-   
-    useEffect(() => {
-        const price = calculatePrice(parcelWeight);
-        setValue('price', price); // Update the price field in the form
-    }, [parcelWeight, setValue]);
-
-   function calculatePrice(weight) {
-       if (weight <= 1) return 50;
-       if (weight>1 && weight<= 2) return 100;
-       return 150;
-   }
+console.log(book)
 
 
-     const onSubmit = async (data) => {
-   
-           console.log(data)
-   
-   
-   
-           const bookItem = {
-               name: data.name,
-               email: data.email,
-               price: parseFloat(data.price),
-               phone: data.phone,
-               parcelType: data.parcelType,
-               parcelWeight: data.parcelWeight,
-               receiverName: data.receiverName,
-               receiverPhoneNumber: data.receiverPhoneNumber,
-               parcelDeliveryAddress: data.parcelDeliveryAddress,
-               requestedDeliveryDate: data.requestedDeliveryDate,
-               deliveryAddressLatitude: data.deliveryAddressLatitude,
-               deliveryAddresslongitude: data.deliveryAddresslongitude,
-              
-           }
-   
-           const bookRes = await axiosSecure.put(`/book/${_id}`, bookItem);
-           console.log(bookRes.data)
-           if(bookRes.data.modifiedCount > 0){
+      // Use useEffect to set the form values once tutor data is fetched
+      useEffect(() => {
+        if (book) {
+            setValue("name", book.name || "");
+            setValue("email", book.email || "");
+            setValue("phone", book.phone || "");
+            setValue("parcelType", book.parcelType || "");
+            setValue("parcelWeight", book.parcelWeight || "");
+            setValue("receiverName", book.receiverName || 0);
+            setValue("receiverPhoneNumber", book.receiverPhoneNumber || "");
+            setValue("parcelDeliveryAddress", book.parcelDeliveryAddress || "");
+            setValue("requestedDeliveryDate", book.requestedDeliveryDate || "");
+            setValue("deliveryAddressLatitude", book.deliveryAddressLatitude || 0);
+            setValue("deliveryAddresslongitude", book.deliveryAddresslongitude || 0);
+            setValue("price", book.price || 0);
+        }
+    }, [book, setValue]);
+
+
+    // const parcelWeight = watch('parcelWeight', 0);
+
+    // useEffect(() => {
+    //     const price = calculatePrice(parcelWeight);
+    //     setValue('price', price); // Update the price field in the form
+    // }, [parcelWeight, setValue]);
+
+    // function calculatePrice(weight) {
+    //     if (weight <= 1) return 50;
+    //     if (weight > 1 && weight <= 2) return 100;
+    //     return 150;
+    // }
+
+
+    const onSubmit = async (data) => {
+
+        console.log(data)
+
+
+
+        const bookItem = {
+            name: data.name,
+            email: data.email,
+            price: parseFloat(data.price),
+            phone: data.phone,
+            parcelType: data.parcelType,
+            parcelWeight: data.parcelWeight,
+            receiverName: data.receiverName,
+            receiverPhoneNumber: data.receiverPhoneNumber,
+            parcelDeliveryAddress: data.parcelDeliveryAddress,
+            requestedDeliveryDate: data.requestedDeliveryDate,
+            deliveryAddressLatitude: data.deliveryAddressLatitude,
+            deliveryAddresslongitude: data.deliveryAddresslongitude,
+
+        }
+
+        const bookRes = await axiosSecure.put(`/book/${params.id}`, bookItem);
+        console.log(bookRes.data)
+        if (bookRes.data.modifiedCount > 0) {
             // show success popup
             // reset();
             Swal.fire({
@@ -73,16 +103,16 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                 title: `${data.name} is updated to the menu.`,
                 showConfirmButton: false,
                 timer: 1500
-              });
+            });
         }
-   
-       }
-   
+
+    }
+
 
 
     return (
         <div>
-            <div className="text-center">
+           <div className="text-center">
                 <h1 className="text-5xl font-bold">Update Parcel</h1>
 
             </div>
@@ -95,31 +125,18 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                         <span className="label-text">Name</span>
                     </label>
 
-                    {
-
-                        user && user?.displayName ? (
+          
 
                             <input
                                 readOnly
-                                defaultValue={user.displayName}
                                 type="text"
                                 placeholder="Name"
                                 {...register('name', { required: true })}
 
                                 className="input input-bordered w-full" />
 
-                        ) : (
-                            <input
-                                readOnly
-                                type="text"
-                                placeholder="Name (read-only)"
-                                {...register('name', { required: true })}
-
-                                className="input input-bordered w-full" />
-
-                        )
-                    }
-
+                       
+                            
 
                 </div>
 
@@ -130,32 +147,16 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                         <span className="label-text">Email</span>
                     </label>
 
-                    {
-
-                        user && user?.email ? (
-
+                   
                             <input
                                 readOnly
-                                defaultValue={user.email}
                                 type="text"
                                 placeholder="Email"
                                 {...register('email', { required: true })}
 
                                 className="input input-bordered w-full" />
 
-                        ) : (
-                            <input
-                                readOnly
-                                type="text"
-                                placeholder="Email (read-only)"
-                                {...register('email', { required: true })}
-
-                                className="input input-bordered w-full" />
-
-                        )
-                    }
-
-
+                        
                 </div>
 
                 {/* phone */}
@@ -166,7 +167,6 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                     </label>
                     <input
                         type="tel"
-                        defaultValue={phone}
                         placeholder="Phone Number"
                         {...register('phone', { required: true })}
                         className="input input-bordered w-full" />
@@ -180,7 +180,6 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                     </label>
                     <input
                         type="text"
-                        defaultValue={parcelType}
                         placeholder="Parcel Type"
                         {...register('parcelType', { required: true })}
                         className="input input-bordered w-full" />
@@ -194,12 +193,10 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                     </label>
                     <input
                         type="number"
-                        defaultValue={parcelWeight}
                         placeholder="Parcel Weight"
                         {...register('parcelWeight', { required: true })}
                         className="input input-bordered w-full" />
                 </div>
-
 
                 {/* Receiver’s Name*/}
 
@@ -209,7 +206,6 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                     </label>
                     <input
                         type="text"
-                        defaultValue={receiverName}
                         placeholder="Receiver’s Name"
                         {...register('receiverName', { required: true })}
                         className="input input-bordered w-full" />
@@ -223,7 +219,6 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                     </label>
                     <input
                         type="tel"
-                        defaultValue={receiverPhoneNumber}
                         placeholder="Receiver's Phone Number"
                         {...register('receiverPhoneNumber', { required: true })}
                         className="input input-bordered w-full" />
@@ -237,7 +232,6 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                     </label>
                     <input
                         type="text"
-                        defaultValue={parcelDeliveryAddress}
                         placeholder="Parcel Delivery Address"
                         {...register('parcelDeliveryAddress', { required: true })}
                         className="input input-bordered w-full" />
@@ -251,7 +245,6 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                     </label>
                     <input
                         type="date"
-                        defaultValue={requestedDeliveryDate}
                         placeholder="Requested Delivery Date"
                         {...register('requestedDeliveryDate', { required: true })}
                         className="input input-bordered w-full" />
@@ -265,7 +258,6 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                     </label>
                     <input
                         type="number"
-                        defaultValue={deliveryAddressLatitude}
                         placeholder="Delivery Address Latitude"
                         {...register('deliveryAddressLatitude', { required: true })}
                         className="input input-bordered w-full" />
@@ -279,12 +271,10 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                     </label>
                     <input
                         type="number"
-                        defaultValue={deliveryAddresslongitude}
                         placeholder="Delivery Address longitude"
                         {...register('deliveryAddresslongitude', { required: true })}
                         className="input input-bordered w-full" />
                 </div>
-
 
                 {/* price */}
                 <div className="form-control w-full ">
@@ -292,10 +282,8 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                         <span className="label-text">Price*</span>
                     </label>
 
-
                     <input
                         type="number"
-                        value={watch('price')}
                         readOnly
                         placeholder="Price"
                         {...register('price', { required: true })}
@@ -306,6 +294,9 @@ const {  phone, _id, parcelType,  receiverName, receiverPhoneNumber, parcelDeliv
                     Update <FaBicycle className="ml-4"></FaBicycle>
                 </button>
             </form>
+
+
+
         </div>
     );
 };

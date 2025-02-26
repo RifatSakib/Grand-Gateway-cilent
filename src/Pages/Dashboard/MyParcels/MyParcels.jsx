@@ -6,10 +6,11 @@ import UseItems from '../../../Hooks/UseItems';
 import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useQuery } from '@tanstack/react-query';
 
 const MyParcels = () => {
 
-    const [book, refetch] = UseItems();
+    // const [book, refetch] = UseItems();
     const axiosSecure = UseAxiosSecure();
     const { user, logOut } = useContext(AuthContext);
     const currentDate = new Date().toLocaleDateString();
@@ -17,6 +18,15 @@ const MyParcels = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null); // State to hold the selected item
 
+
+    const { data: book = [], isPending: loading, refetch } = useQuery({
+        queryKey: ['book',user.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/book/email/${user.email}`);
+
+            return res.data;
+        }
+    })
 
     console.log(user)
 
@@ -51,6 +61,7 @@ const MyParcels = () => {
         if (reviewRes.data.insertedId) {
             // show success popup
             reset();
+            refetch()
             Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -127,7 +138,7 @@ const MyParcels = () => {
                     </thead>
                     <tbody>
                         {
-                            book.map((item, index) => <tr key={item._id}>
+                            book?.map((item, index) => <tr key={item._id}>
                                 <td>
                                     {index + 1}
                                 </td>
