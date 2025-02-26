@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
     {
       path: 'updateItem/:id',
       element: <UpdateItems></UpdateItems>,
-      loader: ({params}) => fetch(`http://localhost:5000/book/${params.id}`)
+      loader: ({params}) => fetch(`https://grandgateway.vercel.app/book/${params.id}`)
     },
 
     
