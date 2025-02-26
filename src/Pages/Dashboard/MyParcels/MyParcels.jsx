@@ -30,6 +30,49 @@ const MyParcels = () => {
 
     console.log(user)
 
+
+    const handleCancel = async (item) => {
+        console.log(item._id)
+
+
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, cancel it!"
+        });
+    
+        // Check if the user confirmed the action
+        if (result.isConfirmed) {
+            try {
+                // Update order status
+                await axiosSecure.patch(`/book/cancel/${item._id}`);
+                
+                // Call refetch to refresh UI (fetch orders data again)
+                refetch(); // Ensure refetch is defined in the scope
+    
+                // Show success message
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: `Properties Updated`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            } catch (err) {
+                console.error(err);
+                toast.error(err.response?.data || "An error occurred");
+            }
+        }
+
+        
+
+    }
+
+
     const closeModal = () => {
         setIsOpen(false);
         setSelectedItem(null); // Reset selected item when closing the modal
@@ -178,7 +221,7 @@ const MyParcels = () => {
 
                                 <td>
                                     <button
-                                        onClick={() => handleDeleteItem(item)}
+                                        onClick={() => handleCancel(item)}
                                         className="btn btn-error btn-sm ">
                                         Cancel
                                     </button>
