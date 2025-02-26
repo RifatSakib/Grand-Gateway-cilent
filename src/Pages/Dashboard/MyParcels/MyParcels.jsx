@@ -20,7 +20,7 @@ const MyParcels = () => {
 
 
     const { data: book = [], isPending: loading, refetch } = useQuery({
-        queryKey: ['book',user.email],
+        queryKey: ['tutor',user.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/book/email/${user.email}`);
 
@@ -138,7 +138,7 @@ const MyParcels = () => {
                     </thead>
                     <tbody>
                         {
-                            book?.map((item, index) => <tr key={item._id}>
+                            book.map((item, index) => <tr key={item._id}>
                                 <td>
                                     {index + 1}
                                 </td>
