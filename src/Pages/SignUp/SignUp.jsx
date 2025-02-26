@@ -11,9 +11,10 @@ import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 const SignUp = () => {
     const axiosPublic = UseAxiosPublic();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const { createUser, updateUserProfile } = useContext(AuthContext);
+    const { user, createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    console.log(user)
     const onSubmit = data => {
 
         createUser(data.email, data.password)
@@ -26,7 +27,8 @@ const SignUp = () => {
                         const userInfo = {
                             name: data.name,
                             email: data.email,
-                            image: data.photoURL
+                            image: data.photoURL,
+                            phone: data.phone,
 
                         }
                         axiosPublic.post('/users', userInfo)
@@ -80,7 +82,13 @@ const SignUp = () => {
                                 {errors.photoURL && <span className="text-red-600">Photo URL is required</span>}
                             </div>
 
-                         
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Phone Number</span>
+                                </label>
+                                <input type="tel"  {...register("phone", { required: true })} name="phone" placeholder="Phone Number" className="input input-bordered" />
+                                {errors.email && <span className="text-red-600">Phone Number is required</span>}
+                            </div>
 
                             <div className="form-control">
                                 <label className="label">
