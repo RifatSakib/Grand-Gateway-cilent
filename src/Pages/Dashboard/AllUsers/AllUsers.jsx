@@ -91,7 +91,7 @@ const AllUsers = () => {
                         <tr>
                             <th></th>
                             <th>Name</th>
-                            <th>Email</th>
+                            <th>Phone</th>
                             <th>Role</th>
                             <th>Action</th>
                             <th></th>
@@ -102,7 +102,7 @@ const AllUsers = () => {
                             users.map((user, index) => <tr key={user._id}>
                                 <th>{index + 1}</th>
                                 <td>{user.name}</td>
-                                <td>{user.email}</td>
+                                <td>{user.phone}</td>
                                 <td>
                                     {user.role === 'admin' ? 'Admin' :
                                         user.role === 'deliveryman' ? 'deliveryman' :
