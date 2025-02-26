@@ -106,6 +106,7 @@ const AllUsers = () => {
                             <th>No Of P.Booked</th>
                             <th>Role</th>
                             <th>Action</th>
+                            <th>Action</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -123,7 +124,7 @@ const AllUsers = () => {
 
 
 
-                                           "user"
+                                            "user"
 
 
                                     }
@@ -134,14 +135,16 @@ const AllUsers = () => {
 
                                 <td>
 
-                                    
-                                <details className="dropdown">
-                                        <summary className=" btn btn-success m-1">Choose User Role</summary>
-                                        <ul className="menu dropdown-content bg-base-100 rounded-box z-30 w-52 p-2 shadow">
-                                        <li onClick={() => handleMakeAdmin(user)}><a>Admin</a></li>
-                                        <li onClick={() => handleMakeDeliveryman(user)}><a>Deliveryman</a></li>
-                                        </ul>
-                                      </details>
+                                    <button className="btn btn-xs btn-warning" onClick={() => handleMakeAdmin(user)}>Make Admin</button>
+
+                                   
+                                </td>
+
+                                <td>
+
+                                    <button className="btn btn-xs btn-error" onClick={() => handleMakeDeliveryman(user)}>Make Deliveryman</button>
+
+                                 
                                 </td>
 
 
