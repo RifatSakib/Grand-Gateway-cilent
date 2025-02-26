@@ -197,7 +197,7 @@ const MyParcels = () => {
                                     {item?.approximateDate}
                                 </td>
                                 <td>
-                                    {currentDate}
+                                    {item?.bookingDate}
                                 </td>
                                 <td>
                                     {item?.deliveryMan_Id}
