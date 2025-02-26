@@ -57,7 +57,7 @@ console.log(deliveryman)
                                 <td>{item?.name}</td>
                                 <td>{item?.phone}</td>
                                 <td>{item?.deliveredCount}</td>
-                                <td>{item?.averageRating}</td>
+                                <td>{item?.averageRating ? item.averageRating.toFixed(3) : "N/A"}</td>
 
 
                             </tr>
