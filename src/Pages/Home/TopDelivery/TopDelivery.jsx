@@ -1,6 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CountUp from 'react-countup';
+import { AuthContext } from '../../../Providers/AuthProvider';
+import { useQuery } from '@tanstack/react-query';
+import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 const TopDelivery = () => {
+const axiosSecure = UseAxiosSecure();
+//   const { data: users = [], refetch,error } = useQuery({
+//         queryKey: ['users'],
+//         queryFn: async () => {
+//             const res = await axiosSecure.get('/users');
+//             return res.data;
+//         }
+//     })
+
+//     if (error) {
+//         console.error("Error fetching bookings:", error);
+//       }
+     
     return (
         <>
 
@@ -81,9 +97,9 @@ const TopDelivery = () => {
                 
 
                 <div className="card-body pt-0 flex-grow-0">
-                    <h2 className="card-title text-3xl justify-center text-white ">Real-Time Tracking</h2>
+                    <h2 className="card-title text-3xl justify-center text-white ">Total No. Of. People</h2>
                    
-                    <h2 className="card-title text-3xl justify-center text-white "> <CountUp end={100} /></h2>
+                    <h2 className="card-title text-3xl justify-center text-white "> <CountUp end={5} /></h2>
                     
                 </div>
             </div>

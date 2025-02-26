@@ -20,7 +20,7 @@ const MyParcels = () => {
 
 
     const { data: book = [], isPending: loading, refetch } = useQuery({
-        queryKey: ['tutor', user.email],
+        queryKey: ['tutor', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/book/email/${user.email}`);
 

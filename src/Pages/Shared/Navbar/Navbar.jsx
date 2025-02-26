@@ -8,16 +8,34 @@ import { AuthContext } from '../../../Providers/AuthProvider';
 import '../../../App.css'
 import UseAdmin from '../../../Hooks/UseAdmin';
 import UseDeliveryman from '../../../Hooks/UseDeliveryman';
+import { CiBellOn } from 'react-icons/ci';
+import { useQuery } from '@tanstack/react-query';
+import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 
 
 
 const Navbar = () => {
 
+  const axiosSecure = UseAxiosSecure();
   const { user, logOut } = useContext(AuthContext);
   console.log(user?.photoURL);
   const [isAdmin] = UseAdmin();
   const [isDeliveryman] = UseDeliveryman();
+
+  const { data: book = [], isPending: loading, refetch } = useQuery({
+         queryKey: ['abcd', user?.email],
+         enabled: !!localStorage.getItem('access-token'),
+         queryFn: async () => {
+             const res = await axiosSecure.get(`/book/email/${user.email}`);
+ 
+             return res.data;
+         }
+     })
+ 
+  
+
+
 
 
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -118,8 +136,14 @@ const Navbar = () => {
 
 {/* ----------------- */}
 
-        <div>
-          <button className='btn btn-success text-white'>hey</button>
+        <div className='px-10 flex flex-col items-center justify-center'> 
+          {/* <button className='btn btn-success text-white'>hey</button> */}
+
+          <div className="indicator">
+  <span className="indicator-item badge badge-secondary">{book?.length || 0}</span>
+  <div className='text-4xl '><CiBellOn /></div>
+
+</div>
         </div>
         <div className="login flex gap-2 items-center">
           <div className=" ">
