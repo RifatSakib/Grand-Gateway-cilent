@@ -6,13 +6,24 @@ import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 
 const AllUsers = () => {
     const axiosSecure = UseAxiosSecure();
+
+
+    // const { data: users = [], refetch } = useQuery({
+    //     queryKey: ['users'],
+    //     queryFn: async () => {
+    //         const res = await axiosSecure.get('/users');
+    //         return res.data;
+    //     }
+    // })
+
+
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/users');
+            const res = await axiosSecure.get('/api/users-with-bookings'); // Updated API endpoint
             return res.data;
         }
-    })
+    });
 
     const handleMakeAdmin = user => {
         axiosSecure.patch(`/users/admin/${user._id}`)
@@ -92,6 +103,7 @@ const AllUsers = () => {
                             <th></th>
                             <th>Name</th>
                             <th>Phone</th>
+                            <th>No Of P.Booked</th>
                             <th>Role</th>
                             <th>Action</th>
                             <th></th>
@@ -103,6 +115,7 @@ const AllUsers = () => {
                                 <th>{index + 1}</th>
                                 <td>{user.name}</td>
                                 <td>{user.phone}</td>
+                                <td>{user.bookedCount || 0}</td>
                                 <td>
                                     {user.role === 'admin' ? 'Admin' :
                                         user.role === 'deliveryman' ? 'deliveryman' :
