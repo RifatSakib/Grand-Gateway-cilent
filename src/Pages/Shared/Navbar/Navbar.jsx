@@ -15,7 +15,7 @@ import UseDeliveryman from '../../../Hooks/UseDeliveryman';
 const Navbar = () => {
 
   const { user, logOut } = useContext(AuthContext);
-  console.log(user);
+  console.log(user?.photoURL);
   const [isAdmin] = UseAdmin();
   const [isDeliveryman] = UseDeliveryman();
 
@@ -28,13 +28,13 @@ const Navbar = () => {
 
   const links = <>
 
-    <li className='font-bold text-lg text-white'><NavLink to="/">Home</NavLink></li>
+    <li className='font-bold text-lg text-black lg:text-white'><Link to="/">Home</Link></li>
 
   </>
 
 
   return (
-    <div className="navbar fixed max-w-screen-xl bg-[#727D73] bg-opacity-80 z-10">
+    <div className="navbar max-w-screen-xl md:fixed  bg-[#727D73] bg-opacity-80 z-10">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -58,8 +58,8 @@ const Navbar = () => {
           </ul>
         </div>
         <div className='flex items-center'>
-          <a className="btn btn-ghost text-2xl text-white font-bold">Grand -<span className='text-orange-500'>Gateway</span> </a>
-          <img className='w-10' src={logo} alt="" />
+          <a className="text-xs px-1 md:px-5 md:text-2xl text-white font-bold">Grand -<span className='text-orange-500'>Gateway</span> </a>
+          <img className='w-4 md:w-10' src={logo} alt="" />
         </div>
 
       </div>
@@ -80,8 +80,23 @@ const Navbar = () => {
 
 
                 <details className="dropdown leading-none  ">
-                  <summary className="border-none m-1 p-0 outline-none"> <img className="w-10 rounded-full" src={user?.photoURL} alt="" /></summary>
-                  <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-36 p-2 shadow">
+                  <summary className="border-none m-1 p-0 outline-none">
+                    {/* <img className="w-10 rounded-full" src={user?.photoURL} alt="" /> */}
+
+                    {user && user?.photoURL? (
+                      <div>
+
+                        <img className=" w-8 md:w-10 rounded-full" src={user?.photoURL} alt="User Profile" />
+                      </div>
+                     
+                    ) : (
+                      <span className="text-2xl md:text-4xl"><RxAvatar /></span>
+                    )}
+
+
+
+                  </summary>
+                  <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-36 p-2 shadow -ml-24">
                     <li className=' cursor-not-allowed bg-none pl-3 '>{user.displayName}</li>
 
 
@@ -92,7 +107,7 @@ const Navbar = () => {
                     {
                       user && isDeliveryman && <li><Link to="/dashboard/myDeliveryList">Dashboard</Link></li>
                     }
-                    
+
                     {
                       user && !isDeliveryman && !isAdmin && <li><Link to="/dashboard/bookaparcel">Dashboard</Link></li>
                     }

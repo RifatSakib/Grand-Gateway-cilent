@@ -6,7 +6,7 @@ import TopDelivery from '../TopDelivery/TopDelivery';
 
 const Home = () => {
     return (
-        <div>
+        <div className='w-full'>
             <Helmet>
                 <title>Grand-Gatewy | Home</title>
             </Helmet>
