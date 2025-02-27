@@ -48,25 +48,25 @@ export const router = createBrowserRouter([
     // normal user routes
     {
       path: 'bookaparcel',
-      element: <BookAParcel></BookAParcel>
+      element: <PrivateRoute> <BookAParcel></BookAParcel></PrivateRoute> 
     },
 
 
     {
       path: 'myparcels',
-      element:<MyParcels></MyParcels>
+      element:<PrivateRoute> <MyParcels></MyParcels> </PrivateRoute> 
     },
 
     {
       path: 'updateItem/:id',
-      element: <UpdateItems></UpdateItems>,
+      element: <PrivateRoute> <UpdateItems></UpdateItems> </PrivateRoute> ,
       loader: ({params}) => fetch(`https://grandgateway.vercel.app/book/${params.id}`)
     },
 
     
     {
       path: 'myprofile',
-      element: <MyProfile></MyProfile>
+      element: <PrivateRoute> <MyProfile></MyProfile> </PrivateRoute> 
     },
 
 
@@ -75,12 +75,12 @@ export const router = createBrowserRouter([
 
     {
       path: 'myDeliveryList',
-      element: <MyDeliveryList></MyDeliveryList>
+      element: <PrivateRoute> <MyDeliveryList></MyDeliveryList> </PrivateRoute> 
     },
 
     {
       path: 'myReview',
-      element: <MyReviews></MyReviews>
+      element: <PrivateRoute><MyReviews></MyReviews> </PrivateRoute> 
     },
 
 
@@ -92,24 +92,24 @@ export const router = createBrowserRouter([
     
     {
       path: 'allUsers',
-      element: <AdminRoute> <AllUsers></AllUsers> </AdminRoute> 
+      element: <PrivateRoute> <AdminRoute> <AllUsers></AllUsers> </AdminRoute>  </PrivateRoute> 
     },
 
 
      
     {
       path: 'allParcels',
-      element: <AdminRoute> <AllParcels></AllParcels> </AdminRoute> 
+      element: <PrivateRoute> <AdminRoute> <AllParcels></AllParcels> </AdminRoute> </PrivateRoute> 
     },
 
     {
       path: 'allDeliveryman',
-      element: <AdminRoute> <AllDeliveryMan></AllDeliveryMan> </AdminRoute> 
+      element: <PrivateRoute> <AdminRoute> <AllDeliveryMan></AllDeliveryMan> </AdminRoute>  </PrivateRoute> 
     },
     
     {
       path: 'statistics',
-      element: <AdminRoute> <AdminStatistics></AdminStatistics> </AdminRoute> 
+      element: <PrivateRoute> <AdminRoute> <AdminStatistics></AdminStatistics> </AdminRoute>  </PrivateRoute> 
     }
 
 
