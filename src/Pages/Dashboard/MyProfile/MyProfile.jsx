@@ -1,76 +1,84 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../Providers/AuthProvider';
 import { useForm } from 'react-hook-form';
-import UseAxiosPublic from '../../../Hooks/UseAxiosPublic';
 import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 import Swal from 'sweetalert2';
 import { useQuery } from '@tanstack/react-query';
+import UseAxiosPublic from '../../../Hooks/UseAxiosPublic';
 
 const MyProfile = () => {
     const { register, handleSubmit } = useForm();
     const { user } = useContext(AuthContext);
     
-    const axiosPublic = UseAxiosPublic();
     const axiosSecure = UseAxiosSecure();
+    const axiosPublic = UseAxiosPublic();
 
     const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
     const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
-    // Fetch the logged-in user's details
+    // // Fetch the logged-in user's details
     const { data: userData, refetch } = useQuery({
         queryKey: ['user', user?.email], // Use a unique queryKey
         queryFn: async () => {
             if (!user?.email) return null; // Prevents API call if user is undefined
-            const res = await axiosPublic.get(`/users/email/${user.email}`);
+            const res = await axiosSecure.get(`/users/email/${user.email}`);
             return res.data;
         },
-        enabled: !!user?.email, // Ensures it only runs when user.email exists
+        enabled:  !!localStorage.getItem('access-token') && !!user?.email, // Ensures it only runs when user.email exists
     });
 
     console.log(userData); // Debugging: Log user data
 
+
+
+    console.log(user.email);
+
     const onSubmit = async (data) => {
-        if (!userData?._id) {
-            console.error("User data not found");
-            return;
-        }
-
-        // Upload image to imgbb
-        const imageFile = { image: data.image[0] };
+        const imageFile = new FormData();
+        imageFile.append("image", data.image[0]);
+    
         try {
+            // Upload image to imgbb
             const res = await axiosPublic.post(image_hosting_api, imageFile, {
-                headers: {
-                    'content-type': 'multipart/form-data',
-                },
+                headers: { 'Content-Type': 'multipart/form-data' },
             });
-
+    
             if (!res.data.success) {
-                console.error("Image upload failed", res.data);
-                return;
+                throw new Error("Image upload failed");
             }
-
+    
             const imgUrl = res.data.data.url;
-
-            // Update user's image in the database
-            const imgRes = await axiosSecure.patch(`/users/imgUpload/${userData._id}`, { image: imgUrl });
-
-            if (imgRes.data.modifiedCount > 0) {
-                // Refresh the data to reflect changes
+    
+            // PATCH request to update image in MongoDB
+            const imgRes = await axiosSecure.patch(`/users/imgUpload/${user?.email}`, { image: imgUrl });
+    
+            if (imgRes.data.success) {
                 refetch();
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: `Profile image updated successfully!`,
+                    title: "Profile image updated successfully!",
                     showConfirmButton: false,
                     timer: 1500,
                 });
             } else {
-                console.error("Failed to update image in DB");
+                throw new Error(imgRes.data.message || "Failed to update image in DB");
             }
+    
         } catch (error) {
-            console.error("Error uploading image", error);
+            console.error("Error:", error);
+            
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: error.message || "Something went wrong!",
+            });
         }
     };
+    
+    
+
+
 
     return (
         <>
@@ -83,11 +91,20 @@ const MyProfile = () => {
                     <div className="hero-content flex-col lg:flex-row-reverse w-full">
                         {/* Profile Image & Upload */}
                         <div className='w-full'>
-                            <img
-                                src={userData?.image || user?.photoURL} // Show updated image if available
+
+                            { userData?.image2? (<img
+                                src={ userData?.image2} // Show updated image if available
                                 className="max-w-sm rounded-lg shadow-2xl"
                                 alt="Profile"
-                            />
+                            />):(<img
+                                src={ user?.photoURL} // Show updated image if available
+                                className="max-w-sm rounded-lg shadow-2xl"
+                                alt="Profile"
+                            />)
+
+
+                            }
+                            
                             <div className="form-control w-full my-6">
                                 <input {...register('image', { required: true })} type="file" className="file-input w-full max-w-xs" />
                             </div>
@@ -98,6 +115,10 @@ const MyProfile = () => {
                         <div className='w-full'>
                             <h1 className="text-xl font-bold ">Name:</h1>
                             <p>{user?.displayName}</p>
+
+                            <h1 className="text-xl font-bold ">Role:</h1>
+                            {userData?.role? (<p>{userData?.role}</p>):(<p>User</p>)}
+                            
 
                             <h1 className="text-xl font-bold ">Email:</h1>
                             <p>{user?.email}</p>

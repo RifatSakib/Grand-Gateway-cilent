@@ -24,16 +24,30 @@ const Navbar = () => {
   const [isDeliveryman] = UseDeliveryman();
 
   const { data: book = [], isPending: loading, refetch } = useQuery({
-         queryKey: ['abcd', user?.email],
-         enabled: !!localStorage.getItem('access-token'),
-         queryFn: async () => {
-             const res = await axiosSecure.get(`/book/email/${user.email}`);
- 
-             return res.data;
-         }
-     })
- 
-  
+    queryKey: ['abcd', user?.email],
+    enabled: !!localStorage.getItem('access-token'),
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/book/email/${user.email}`);
+
+      return res.data;
+    }
+  })
+
+
+  //  for nav image upload
+  // // Fetch the logged-in user's details
+  const { data: userData } = useQuery({
+    queryKey: ['userPhoto', user?.email], // Use a unique queryKey
+    queryFn: async () => {
+      if (!user?.email) return null; // Prevents API call if user is undefined
+      const res = await axiosSecure.get(`/users/email/${user.email}`);
+      return res.data;
+    },
+    enabled: !!localStorage.getItem('access-token') && !!user?.email, // Ensures it only runs when user.email exists
+  });
+
+
+
 
 
 
@@ -107,10 +121,10 @@ const Navbar = () => {
       </div>
       <div className="navbar-end gap-2">
 
-{/* theme toggle button */}
+        {/* theme toggle button */}
 
 
-<label className="swap swap-rotate">
+        <label className="swap swap-rotate">
           {/* Hidden checkbox to track state */}
           <input type="checkbox" checked={theme === "dark"} onChange={toggleTheme} />
 
@@ -134,16 +148,16 @@ const Navbar = () => {
         </label>
 
 
-{/* ----------------- */}
+        {/* ----------------- */}
 
-        <div className='px-10 flex flex-col items-center justify-center'> 
+        <div className='px-10 flex flex-col items-center justify-center'>
           {/* <button className='btn btn-success text-white'>hey</button> */}
 
           <div className="indicator">
-  <span className="indicator-item badge badge-secondary">{book?.length || 0}</span>
-  <div className='text-4xl '><CiBellOn /></div>
+            <span className="indicator-item badge badge-secondary">{book?.length || 0}</span>
+            <div className='text-4xl '><CiBellOn /></div>
 
-</div>
+          </div>
         </div>
         <div className="login flex gap-2 items-center">
           <div className=" ">
@@ -153,44 +167,44 @@ const Navbar = () => {
 
                 <details className="dropdown leading-none  ">
                   <summary className="border-none m-1 p-0 outline-none">
-                    {/* <img className="w-10 rounded-full" src={user?.photoURL} alt="" /> */}
 
-                    {user && user?.photoURL? (
+                    {user && user?.photoURL &&  (
                       <div>
-
-                        <img className=" w-8 md:w-10 rounded-full" src={user?.photoURL} alt="User Profile" />
+                        { user && userData?.image2 ? (
+                          <img className="w-8 md:w-10 rounded-full" src={userData.image2} alt="User Profile" referrerPolicy='no-referrer' />
+                        ) : user && user?.photoURL ? (
+                          <img className="w-8 md:w-10 rounded-full" src={user.photoURL} alt="User Profile" referrerPolicy='no-referrer' />
+                        ) : (
+                          <span className="text-2xl md:text-4xl">
+                            <RxAvatar />
+                          </span>
+                        )}
                       </div>
-                     
-                    ) : (
-                      <span className="text-2xl md:text-4xl"><RxAvatar /></span>
                     )}
+
+
 
 
 
                   </summary>
                   <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-36 p-2 shadow -ml-24">
-                    <li className=' cursor-not-allowed bg-none pl-3 '>{user.displayName}</li>
+                    <li className=' cursor-not-allowed bg-none pl-3 font-bold '>{user.displayName}</li>
 
 
                     {
-                      user && isAdmin && <li><Link to="/dashboard/statistics">Dashboard</Link></li>
+                      user && isAdmin && <li className='text-yellow-500 font-bold'><Link to="/dashboard/statistics">Dashboard</Link></li>
                     }
 
                     {
-                      user && isDeliveryman && <li><Link to="/dashboard/myDeliveryList">Dashboard</Link></li>
+                      user && isDeliveryman && <li className='text-yellow-500 font-bold'><Link to="/dashboard/myDeliveryList">Dashboard</Link></li>
                     }
 
                     {
-                      user && !isDeliveryman && !isAdmin && <li><Link to="/dashboard/bookaparcel">Dashboard</Link></li>
+                      user && !isDeliveryman && !isAdmin && <li className='text-yellow-500 font-bold'><Link to="/dashboard/bookaparcel">Dashboard</Link></li>
                     }
 
 
-
-                    {/* <Link to="/dashboard"> <li><a>Dashboard</a></li></Link> */}
-
-
-
-                    <Link to="/"> <li onClick={handleLogOut}><a>Log-Out</a></li></Link>
+                    <Link to="/"> <li onClick={handleLogOut} className='text-red-500 font-bold'><a>Log-Out</a></li></Link>
                   </ul>
                 </details>
 
@@ -206,9 +220,7 @@ const Navbar = () => {
           {user && user?.email ?
 
             (
-              // <button onClick={handleLogOut} className="btn btn-neutral rounded-none">
-              //   Log-Out
-              // </button>
+
               <></>
             ) :
 

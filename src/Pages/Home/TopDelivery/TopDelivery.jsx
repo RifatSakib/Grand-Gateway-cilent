@@ -72,9 +72,9 @@ const axiosSecure = UseAxiosSecure();
                 
 
                 <div className="card-body pt-0 flex-grow-0">
-                    <h2 className="card-title text-3xl justify-center text-white ">Real-Time Tracking</h2>
+                    <h2 className="card-title text-xl justify-center text-white ">Total NO. of Parcels Booked</h2>
                    
-                    <h2 className="card-title text-3xl justify-center text-white "> <CountUp end={100} /></h2>
+                    <h2 className="card-title text-xl justify-center text-white "> <CountUp end={100} /></h2>
                     
                 </div>
             </div>
@@ -84,9 +84,9 @@ const axiosSecure = UseAxiosSecure();
                 
 
                 <div className="card-body pt-0 flex-grow-0">
-                    <h2 className="card-title text-3xl justify-center text-white ">Real-Time Tracking</h2>
+                    <h2 className="card-title text-xl justify-center text-white ">Total No. of Parcels Delivered</h2>
                    
-                    <h2 className="card-title text-3xl justify-center text-white "> <CountUp end={100} /></h2>
+                    <h2 className="card-title text-xl justify-center text-white "> <CountUp end={100} /></h2>
                     
                 </div>
             </div>
@@ -97,9 +97,9 @@ const axiosSecure = UseAxiosSecure();
                 
 
                 <div className="card-body pt-0 flex-grow-0">
-                    <h2 className="card-title text-3xl justify-center text-white ">Total No. Of. People</h2>
+                    <h2 className="card-title text-xl justify-center text-white ">Total No. Of People</h2>
                    
-                    <h2 className="card-title text-3xl justify-center text-white "> <CountUp end={5} /></h2>
+                    <h2 className="card-title text-xl justify-center text-white "> <CountUp end={5} /></h2>
                     
                 </div>
             </div>
