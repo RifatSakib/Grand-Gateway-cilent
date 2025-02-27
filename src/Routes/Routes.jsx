@@ -18,6 +18,7 @@ import MyDeliveryList from '../Pages/Dashboard/MyDeliveryList/MyDeliveryList';
 import MyReviews from '../Pages/Dashboard/MyReviews/MyReviews';
 import AllDeliveryMan from '../Pages/Dashboard/AllDeliveryMan/AllDeliveryMan';
 import AdminStatistics from '../Pages/Dashboard/Statistics/AdminStatistics';
+import Payment from '../Pages/Dashboard/Payment/Payment';
 
 export const router = createBrowserRouter([
   {
@@ -60,6 +61,12 @@ export const router = createBrowserRouter([
     {
       path: 'updateItem/:id',
       element: <PrivateRoute> <UpdateItems></UpdateItems> </PrivateRoute> ,
+      loader: ({params}) => fetch(`https://grandgateway.vercel.app/book/${params.id}`)
+    },
+
+    {
+      path: 'payment/:id',
+      element: <PrivateRoute> <Payment></Payment> </PrivateRoute> ,
       loader: ({params}) => fetch(`https://grandgateway.vercel.app/book/${params.id}`)
     },
 

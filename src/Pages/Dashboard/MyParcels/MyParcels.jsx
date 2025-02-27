@@ -263,11 +263,16 @@ const MyParcels = () => {
                                 </td>
 
                                 <td>
+
+                                <Link to={`/dashboard/payment/${item._id}`}>
+                                
                                     <button
 
                                         className="btn btn-accent btn-xs">
                                         pay
                                     </button>
+                                </Link>
+
                                 </td>
 
 

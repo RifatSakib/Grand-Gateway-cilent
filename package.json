@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^3.1.1",
+    "@stripe/stripe-js": "^5.7.0",
     "@tanstack/react-query": "^5.64.2",
     "apexcharts": "^4.4.0",
     "axios": "^1.7.9",
@@ -20,6 +22,7 @@
     "match-sorter": "^8.0.0",
     "react": "^18.3.1",
     "react-apexcharts": "^1.7.0",
+    "react-confetti": "^6.2.3",
     "react-countup": "^6.5.3",
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
@@ -29,6 +32,7 @@
     "react-icons": "^5.4.0",
     "react-router-dom": "^7.1.1",
     "react-simple-captcha": "^9.3.1",
+    "react-use": "^17.6.0",
     "sort-by": "^0.0.2",
     "sweetalert2": "^11.15.10"
   },
