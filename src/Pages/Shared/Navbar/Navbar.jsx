@@ -150,12 +150,12 @@ const Navbar = () => {
 
         {/* ----------------- */}
 
-        <div className='px-10 flex flex-col items-center justify-center'>
+        <div className=' px-2 md:px-10 flex flex-col items-center justify-center'>
           {/* <button className='btn btn-success text-white'>hey</button> */}
 
           <div className="indicator">
             <span className="indicator-item badge badge-secondary">{book?.length || 0}</span>
-            <div className='text-4xl '><CiBellOn /></div>
+            <div className='text-2xl md:text-4xl '><CiBellOn /></div>
 
           </div>
         </div>
@@ -212,7 +212,7 @@ const Navbar = () => {
               </div>
             ) : (
               //   <img className='text-white' src={userIcon} alt="" />
-              <span className='text-5xl'> <RxAvatar /> </span>
+              <span className=' text-2xl md:text-5xl'> <RxAvatar /> </span>
             )}
           </div>
 
@@ -225,8 +225,8 @@ const Navbar = () => {
             ) :
 
             (
-              <Link to="/login" className="btn btn-neutral rounded-none text-white">
-                Login
+              <Link to="/login" >
+                <button className="btn btn-neutral rounded-none text-white w-10 md:w-20"> Login</button>
               </Link>
             )}
 

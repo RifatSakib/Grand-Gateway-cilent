@@ -51,44 +51,7 @@ const Features = () => {
 
 
 
-{/* ------------map use kora lagbe------------------------ */}
 
-   {/* card 1 */}
-                <div className="card glass bg-black  bg-opacity-70 py-4">
-                    
-
-                    <div className="card-body pt-0 flex-grow-0">
-                        <h2 className="card-title text-3xl justify-center text-white ">Real-Time Tracking</h2>
-                       
-                        <h2 className="card-title text-3xl justify-center text-white "> <CountUp end={100} /></h2>
-                        
-                    </div>
-                </div>
-
-                {/* card 2 */}
-                <div className="card glass bg-black  bg-opacity-70 py-4">
-                    
-
-                    <div className="card-body pt-0 flex-grow-0">
-                        <h2 className="card-title text-3xl justify-center text-white ">Real-Time Tracking</h2>
-                       
-                        <h2 className="card-title text-3xl justify-center text-white "> <CountUp end={100} /></h2>
-                        
-                    </div>
-                </div>
-
-
-                {/* card 3 */}
-                <div className="card glass bg-black  bg-opacity-70 py-4">
-                    
-
-                    <div className="card-body pt-0 flex-grow-0">
-                        <h2 className="card-title text-3xl justify-center text-white ">Real-Time Tracking</h2>
-                       
-                        <h2 className="card-title text-3xl justify-center text-white "> <CountUp end={100} /></h2>
-                        
-                    </div>
-                </div>
 
             </div>
 

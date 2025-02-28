@@ -10,16 +10,16 @@ const Banner = () => {
             }}>
             <div className="hero-overlay bg-opacity-0"></div>
             <div className="hero-content text-neutral-content text-center">
-                <div className="max-w-xl">
-                    <h1 className="mb-5 text-5xl font-bold pt-12 text-white">Your Parcel,<span className='text-orange-500'>Our Promise!</span></h1>
-                    <p className="mb-5 text-gray-400">
+                <div className="max-w-3xl">
+                    <h1 className="mb-5 text-5xl md:text-8xl font-bold pt-12 text-red-600 font-bold  md:font-extrabold shadow-black ">Your Parcel,<span className='text-orange-500'>Our Promise!</span></h1>
+                    <p className="mb-5 text-lg md:text-3xl text-blue-400 font-extrabold">
                         Fast, reliable, and hassle-free delivery solutions. Book now and let us handle the rest!
                     </p>
 
                     {/* search bar */}
                     <div className="join">
                         <input className="input input-bordered text-black join-item" placeholder="Search Here" />
-                        <button className="btn join-item rounded-r-full"><svg
+                        <button className="btn btn-error join-item rounded-r-full"><svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 16 16"
                             fill="currentColor"

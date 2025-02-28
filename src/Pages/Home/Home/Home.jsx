@@ -11,7 +11,7 @@ const Home = () => {
                 <title>Grand-Gatewy | Home</title>
             </Helmet>
 
-          <Banner></Banner>
+          <Banner ></Banner>
           <Features></Features>
           <TopDelivery></TopDelivery>
 
