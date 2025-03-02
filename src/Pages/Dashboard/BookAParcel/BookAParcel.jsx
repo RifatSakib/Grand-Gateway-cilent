@@ -49,8 +49,8 @@ console.log(currentDate)
             receiverPhoneNumber: data.receiverPhoneNumber,
             parcelDeliveryAddress: data.parcelDeliveryAddress,
             requestedDeliveryDate: data.requestedDeliveryDate,
-            deliveryAddressLatitude: data.deliveryAddressLatitude,
-            deliveryAddresslongitude: data.deliveryAddresslongitude,
+            deliveryAddressLatitude: parseFloat(data.deliveryAddressLatitude),
+            deliveryAddresslongitude: parseFloat(data.deliveryAddresslongitude),
             status: "pending", //default
         }
 
@@ -263,6 +263,7 @@ console.log(currentDate)
                     </label>
                     <input
                         type="number"
+                        step="any"
                         placeholder="Delivery Address Latitude"
                         {...register('deliveryAddressLatitude', { required: true })}
                         className="input input-bordered w-full" />
@@ -276,6 +277,7 @@ console.log(currentDate)
                     </label>
                     <input
                         type="number"
+                        step="any"
                         placeholder="Delivery Address longitude"
                         {...register('deliveryAddresslongitude', { required: true })}
                         className="input input-bordered w-full" />

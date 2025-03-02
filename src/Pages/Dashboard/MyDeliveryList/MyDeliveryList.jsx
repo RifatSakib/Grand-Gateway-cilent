@@ -6,31 +6,27 @@ import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
+// import MyLocation from './MyLocation';
 
 const MyDeliveryList = () => {
-
-    //   const { user, logOut } = useContext(AuthContext);
-
-    //   const [isDeliveryman] = UseDeliveryman();
-
-    //   console.log(isDeliveryman)
-
-    // const [selectedItem, setSelectedItem] = useState(null); // State to hold the selected item
-
-
-
     const { user, loading } = UseAuth();
     const axiosSecure = UseAxiosSecure();
 
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
 
-    // const { data: deliveryman = [], isPending: isDeliverymanLoading } = useQuery({
-    //     queryKey: [user?.email, 'deliveryman'],
-    //     enabled: !loading && !!user?.email,
-    //     queryFn: async () => {
-    //         const res = await axiosSecure.get(`/users/oneDeliveryman/${user.email}`);
-    //         return res.data.user;
-    //     }
-    // })
+
+
+    const closeModal = () => {
+        setIsOpen(false);
+        setSelectedItem(null); // Reset selected item when closing the modal
+    };
+
+    const handleManageLocation = (item) => {
+        setSelectedItem(item); // Set the selected item
+        setIsOpen(true); // Open the modal
+    };
+
 
 
     const { data: deliveryman = {}, isLoading: isDeliverymanLoading } = useQuery({
@@ -43,17 +39,8 @@ const MyDeliveryList = () => {
     });
 
 
-    //  const { data: bookByDeliveryId = [],  } = useQuery({
-    //     queryKey: [deliveryman?._id, 'bookByDeliveryId'],
-    //     enabled: !!deliveryman?._id,
-    //     queryFn: async () => {
-    //         const res = await axiosSecure.get(`/book/AllBookByDeliveryId/${deliveryman._id}`);
-    //         return res.data.user;
-    //     }
-    // })
 
-
-    const { data: bookByDeliveryId = [], isLoading: isBooksLoading,refetch } = useQuery({
+    const { data: bookByDeliveryId = [], isLoading: isBooksLoading, refetch } = useQuery({
         queryKey: [deliveryman?._id, 'bookByDeliveryId'],
         enabled: !!deliveryman?._id, // Ensure deliveryman ID is available
         queryFn: async () => {
@@ -86,16 +73,16 @@ const MyDeliveryList = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, cancel it!"
         });
-    
+
         // Check if the user confirmed the action
         if (result.isConfirmed) {
             try {
                 // Update order status
                 await axiosSecure.patch(`/book/cancel/${item._id}`);
-                
+
                 // Call refetch to refresh UI (fetch orders data again)
                 refetch(); // Ensure refetch is defined in the scope
-    
+
                 // Show success message
                 Swal.fire({
                     position: "top-end",
@@ -110,7 +97,7 @@ const MyDeliveryList = () => {
             }
         }
 
-        
+
 
     }
 
@@ -130,16 +117,16 @@ const MyDeliveryList = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, deliver it!"
         });
-    
+
         // Check if the user confirmed the action
         if (result.isConfirmed) {
             try {
                 // Update order status
                 await axiosSecure.patch(`/book/deliver/${item._id}`);
-                
+
                 // Call refetch to refresh UI (fetch orders data again)
                 refetch(); // Ensure refetch is defined in the scope
-    
+
                 // Show success message
                 Swal.fire({
                     position: "top-end",
@@ -153,7 +140,7 @@ const MyDeliveryList = () => {
                 toast.error(err.response?.data || "An error occurred");
             }
         }
-        
+
 
     }
 
@@ -186,7 +173,7 @@ const MyDeliveryList = () => {
                     <tbody>
                         {bookByDeliveryId.map((item, index) => (
                             <tr key={item._id} >
-                               
+
                                 <td>{index + 1}</td>
                                 <td>{item.name}</td>
                                 <td>{item.receiverName}</td>
@@ -197,6 +184,12 @@ const MyDeliveryList = () => {
                                 <td>{item.parcelDeliveryAddress}</td>
                                 <td>
                                     <button
+
+                                        onClick={() => {
+                                            handleManageLocation(item);
+                                          
+                                        }} // Pass the item to the handler
+
                                         className="btn btn-outline btn-sm">
                                         view location
                                     </button>
@@ -205,7 +198,7 @@ const MyDeliveryList = () => {
                                     <button
                                         onClick={() => {
                                             handleCancel(item)
-                                           
+
                                         }}
                                         className="btn btn-error btn-sm">
                                         cancel
@@ -213,10 +206,10 @@ const MyDeliveryList = () => {
                                 </td>
                                 <td>
                                     <button
-                                     onClick={() => {
-                                        handleDeliver(item)
-                                       
-                                    }}
+                                        onClick={() => {
+                                            handleDeliver(item)
+
+                                        }}
                                         className="btn btn-success btn-sm">
                                         Deliver
                                     </button>
@@ -227,6 +220,23 @@ const MyDeliveryList = () => {
                 </table>
             </div>
 
+
+ {/* Modal */}
+ {isOpen && selectedItem && (
+                <dialog className="modal absolute" open>
+                    <div className="modal-box">
+                        <h3 className="font-bold text-lg">{selectedItem.name}</h3>
+                        <h3 className="font-bold text-lg">{selectedItem.email}</h3>
+
+                    {/* <MyLocation></MyLocation> */}
+                        
+
+                        <div className="modal-action">
+                            <button className="btn" onClick={closeModal}>Close</button>
+                        </div>
+                    </div>
+                </dialog>
+            )}
 
         </div>
     );

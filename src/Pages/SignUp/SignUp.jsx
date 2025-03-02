@@ -14,8 +14,11 @@ const SignUp = () => {
     const { user, createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
 
+
     console.log(user)
     const onSubmit = data => {
+
+
 
         createUser(data.email, data.password)
             .then(result => {
@@ -31,6 +34,12 @@ const SignUp = () => {
                             phone: data.phone,
 
                         }
+
+                        // Add role to userInfo if role is 'deliveryman'
+                        if (data.role === 'deliveryman') {
+                            userInfo.role = 'deliveryman';
+                        }
+
                         axiosPublic.post('/users', userInfo)
                             .then(res => {
                                 if (res.data.insertedId) {
@@ -72,6 +81,22 @@ const SignUp = () => {
                                 </label>
                                 <input type="text"  {...register("name", { required: true })} name="name" placeholder="Name" className="input input-bordered" />
                                 {errors.name && <span className="text-red-600">Name is required</span>}
+                            </div>
+
+                            {/* role */}
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Your Role</span>
+                                </label>
+                                <select
+                                    {...register("role", { required: true })}
+                                    name="role"
+                                    className="select select-bordered"
+                                >
+                                    <option value="user"> User</option>
+                                    <option value="deliveryman">Deliveryman</option>
+                                </select>
+                                {errors.role && <span className="text-red-600">Role is required</span>}
                             </div>
 
                             <div className="form-control">
