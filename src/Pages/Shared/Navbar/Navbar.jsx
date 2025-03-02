@@ -188,7 +188,7 @@ const Navbar = () => {
 
                   </summary>
                   <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-36 p-2 shadow -ml-24">
-                    <li className=' cursor-not-allowed bg-none pl-3 font-bold '>{user.displayName}</li>
+                    <li className=' cursor-not-allowed bg-none pl-4 font-extrabold '>{user.displayName}</li>
 
 
                     {

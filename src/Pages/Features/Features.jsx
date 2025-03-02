@@ -7,10 +7,10 @@ const Features = () => {
         <>
 
             {/* statics cards */}
-            <div className='bg-[#AAB99A] grid md:grid-cols-3 gap-4 py-10 px-5 '>
+            <div className='grid md:grid-cols-3 gap-4 py-10 px-5 '>
 
                 {/* card 1 */}
-                <div className="card glass  ">
+                <div className="card glass bg-[#AAB99A]  ">
                     <div className='text-5xl mx-auto my-4 '>
 
 
@@ -24,7 +24,7 @@ const Features = () => {
                 </div>
 
                 {/* card 2 */}
-                <div className="card glass">
+                <div className="card glass bg-[#AAB99A] ">
                     <div className='text-5xl mx-auto my-4 '>
 
                         <img width="48" height="48" src="https://img.icons8.com/emoji/48/shield-emoji.png" alt="shield-emoji" />
@@ -37,7 +37,7 @@ const Features = () => {
                 </div>
 
                 {/* card 3 */}
-                <div className="card glass ">
+                <div className="card glass bg-[#AAB99A] ">
                     <div className='text-5xl mx-auto my-4 '>
 
                         <img width="48" height="48" src="https://img.icons8.com/emoji/48/high-voltage.png" alt="high-voltage" />

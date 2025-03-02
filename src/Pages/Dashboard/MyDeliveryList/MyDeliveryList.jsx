@@ -6,7 +6,7 @@ import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
-// import MyLocation from './MyLocation';
+import MyLocation from './MyLocation';
 
 const MyDeliveryList = () => {
     const { user, loading } = UseAuth();
@@ -223,12 +223,19 @@ const MyDeliveryList = () => {
 
  {/* Modal */}
  {isOpen && selectedItem && (
-                <dialog className="modal absolute" open>
+                <dialog className="modal absolute" open style={{
+                    maxHeight: "90vh", // Ensure it doesn't get cut
+                    overflowY: "auto",
+                    width: "80vw", // Adjust modal width
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}>
                     <div className="modal-box">
                         <h3 className="font-bold text-lg">{selectedItem.name}</h3>
                         <h3 className="font-bold text-lg">{selectedItem.email}</h3>
 
-                    {/* <MyLocation></MyLocation> */}
+                    <MyLocation></MyLocation>
                         
 
                         <div className="modal-action">

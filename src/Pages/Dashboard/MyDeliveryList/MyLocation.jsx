@@ -1,21 +1,66 @@
-import React from 'react';
-import { Map } from 'react-map-gl';
-import 'maplibre-gl/dist/maplibre-gl.css';
+import { useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+
+// Manually set the marker icon
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+const customIcon = L.icon({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+  iconSize: [25, 41], // Default Leaflet icon size
+  iconAnchor: [12, 41], // Positioning
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
 
 const MyLocation = () => {
-    return (
-        <div>
-            <Map
-                initialViewState={{
-                    longitude: -122.4,
-                    latitude: 37.8,
-                    zoom: 14
-                }}
-                style={{ width: 600, height: 400 }}
-                mapStyle="https://api.maptiler.com/maps/streets/style.json?key=ZCgD1QpQADKrMb0KYzKL"
+  const position = [23.800177, 90.411978]; // Dhaka, Bangladesh
+  const [showMap, setShowMap] = useState(true);
+
+  return (
+    <div style={{ width: "100%", textAlign: "center" }}>
+      {showMap && (
+        <div style={{ height: "400px", width: "100%", position: "relative" }}>
+          <MapContainer
+            center={position}
+            zoom={13}
+            scrollWheelZoom={false}
+            style={{ height: "100%", width: "100%" }}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+            <Marker position={position} icon={customIcon}>
+              <Popup>A pretty CSS3 popup. <br /> Easily customizable.</Popup>
+            </Marker>
+          </MapContainer>
+
+        
         </div>
-    );
+      )}
+
+      {!showMap && (
+        <button
+          onClick={() => setShowMap(true)}
+          style={{
+            marginTop: "10px",
+            background: "green",
+            color: "white",
+            border: "none",
+            padding: "10px 15px",
+            cursor: "pointer",
+            borderRadius: "5px",
+          }}
+        >
+          Open Map
+        </button>
+      )}
+    </div>
+  );
 };
 
 export default MyLocation;
