@@ -187,7 +187,7 @@ const MyDeliveryList = () => {
 
                                         onClick={() => {
                                             handleManageLocation(item);
-                                          
+
                                         }} // Pass the item to the handler
 
                                         className="btn btn-outline btn-sm">
@@ -221,8 +221,8 @@ const MyDeliveryList = () => {
             </div>
 
 
- {/* Modal */}
- {isOpen && selectedItem && (
+            {/* Modal */}
+            {isOpen && selectedItem && (
                 <dialog className="modal absolute" open style={{
                     maxHeight: "90vh", // Ensure it doesn't get cut
                     overflowY: "auto",
@@ -230,17 +230,25 @@ const MyDeliveryList = () => {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                  }}>
+                }}>
                     <div className="modal-box">
-                        <h3 className="font-bold text-lg">{selectedItem.name}</h3>
-                        <h3 className="font-bold text-lg">{selectedItem.email}</h3>
+                        <div className='flex justify-between'>
+                            <h3 className="font-bold text-lg">Map</h3>
 
-                    <MyLocation></MyLocation>
-                        
-
-                        <div className="modal-action">
-                            <button className="btn" onClick={closeModal}>Close</button>
+                            <div className="p-2">
+                                <button className="btn btn-error " onClick={closeModal}>Close</button>
+                            </div>
                         </div>
+
+                        <MyLocation
+                            deliveryAddressLatitude={selectedItem.deliveryAddressLatitude}
+                            deliveryAddresslongitude={selectedItem.deliveryAddresslongitude}
+                        >
+
+                        </MyLocation>
+
+
+
                     </div>
                 </dialog>
             )}

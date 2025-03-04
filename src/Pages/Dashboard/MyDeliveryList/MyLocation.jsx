@@ -16,8 +16,13 @@ const customIcon = L.icon({
   shadowSize: [41, 41],
 });
 
-const MyLocation = () => {
-  const position = [23.800177, 90.411978]; // Dhaka, Bangladesh
+const MyLocation = ( {deliveryAddressLatitude,deliveryAddresslongitude}) => {
+ 
+ 
+  const latitude = parseFloat(deliveryAddressLatitude);
+  const longitude = parseFloat(deliveryAddresslongitude);
+console.log(latitude,longitude)
+  const position = [latitude, longitude]; // Dhaka, Bangladesh
   const [showMap, setShowMap] = useState(true);
 
   return (
@@ -27,7 +32,8 @@ const MyLocation = () => {
           <MapContainer
             center={position}
             zoom={13}
-            scrollWheelZoom={false}
+            scrollWheelZoom={true}
+          
             style={{ height: "100%", width: "100%" }}
           >
             <TileLayer
