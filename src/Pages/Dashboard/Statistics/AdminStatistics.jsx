@@ -30,6 +30,7 @@ const AdminStatistics = () => {
     });
 
 
+
     useEffect(() => {
         if (bookings.length > 0) {
             const dates = bookings.map(booking => booking._id);
@@ -94,7 +95,11 @@ const AdminStatistics = () => {
 
 
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading || loadingDeliveries) return <div>
+
+        <span className="loading loading-bars loading-xl"></span>
+
+    </div>;
     if (error) {
         console.error('Error fetching bookings data:', error);
         return <div>Error fetching bookings data</div>;
@@ -110,7 +115,9 @@ const AdminStatistics = () => {
                     height={350}
                 />
             ) : (
-                <div>Loading...</div>
+                <div>        <span className="loading loading-bars loading-xl"></span>
+
+                </div>
             )}
 
 
@@ -122,7 +129,9 @@ const AdminStatistics = () => {
                     height={350}
                 />
             ) : (
-                <div>Loading...</div>
+                <div>        <span className="loading loading-bars loading-xl"></span>
+
+                </div>
             )}
 
 

@@ -35,7 +35,7 @@ const Accordion = () => {
     return (
         <div data-aos="fade-up"
         data-aos-duration="2000"
-        className='py-10 flex flex-col gap-2'>
+        className='py-10 flex flex-col gap-2 px-2'>
             <div className="collapse bg-[#AAB99A]">
                 <input type="radio" name="my-accordion-1" defaultChecked />
                 <div className="collapse-title text-xl font-medium text-black">Why Grand-Gateway is the Ultimate Parcel Solution?</div>

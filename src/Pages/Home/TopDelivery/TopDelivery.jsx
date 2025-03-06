@@ -49,40 +49,39 @@ AOS.init({
 const TopDelivery = () => {
 const axiosSecure = UseAxiosSecure();
 const axiosPublic = UseAxiosPublic();
-  const { data: users = [], refetch,error } = useQuery({
-        queryKey: ['users'],
-        queryFn: async () => {
-            const res = await axiosPublic.get('/users/all');
-            return res.data;
-        }
-    })
 
-//     if (error) {
-//         console.error("Error fetching bookings:", error);
-//       }
+const { data: users = {}, refetch, error } = useQuery({
+    queryKey: ['count'],
+    queryFn: async () => {
+        const res = await axiosPublic.get('/users/all');
+        return res.data; // This will now be { count: number }
+    }
+});
 
 
 
-const { data: bookData =[], isLoading: loading } = useQuery({
+
+
+
+
+const { data: bookData ={}, isLoading: loading } = useQuery({
     queryKey: ['bookedparcel'], // Use a unique queryKey
     queryFn: async () => {
       const res = await axiosPublic.get(`/book/all/forbanner`);
       return res.data;
     },
-    // Ensures it only runs when user.email exists
   });
 
 
-  const { data: deliveredbookdata =[] } = useQuery({
-    queryKey: ['abchf'], // Use a unique queryKey
+  const { data: deliveredbookdata = {} } = useQuery({
+    queryKey: ['deliveredBooksCount'], // ✅ Use a descriptive key
     queryFn: async () => {
-      const res = await axiosPublic.get(`/book/all/forbanner/delivered`);
-      return res.data;
+        const res = await axiosPublic.get('/book/all/forbanner/delivered');
+        return res.data; // ✅ Expecting an object { count: number }
     },
-    // Ensures it only runs when user.email exists
-  });
+});
 
-  console.log(deliveredbookdata.length)
+  console.log(deliveredbookdata.count)
      
     return (
         <>
@@ -106,9 +105,9 @@ const { data: bookData =[], isLoading: loading } = useQuery({
                 
 
                 <div className="card-body pt-0 flex-grow-0">
-                    <h2 className="card-title text-3xl justify-center text-black">Total Parcels Booked</h2>
+                    <h2 className="card-title  text-xl md:text-3xl justify-center text-black">Total Parcels Booked</h2>
                    
-                    <h2 className="card-title text-4xl justify-center text-[#AAB99A] font-extrabold "> <CountUp end={bookData.length} /> <span className='text-white '><IoMdNotificationsOutline /></span></h2>
+                    <h2 className="card-title  text-2xl md:text-4xl justify-center text-[#AAB99A] font-extrabold "> <CountUp end={bookData?.count || 0} /> <span className='text-white '><IoMdNotificationsOutline /></span></h2>
                     
                 </div>
             </div>
@@ -123,9 +122,9 @@ const { data: bookData =[], isLoading: loading } = useQuery({
                 
 
                 <div className="card-body pt-0 flex-grow-0">
-                    <h2 className="card-title text-3xl justify-center text-black">Total Parcels Delivered</h2>
+                    <h2 className="card-title  text-xl md:text-3xl justify-center text-black">Total Parcels Delivered</h2>
                    
-                    <h2 className="card-title text-4xl justify-center text-[#AAB99A]  font-extrabold "> <CountUp end={deliveredbookdata.length} /> <span className='text-white'><CiDeliveryTruck /></span></h2>
+                    <h2 className="card-title  text-2xl md:text-4xl justify-center text-[#AAB99A]  font-extrabold "> <CountUp end={deliveredbookdata?.count || 0} /> <span className='text-white'><CiDeliveryTruck /></span></h2>
                     
                 </div>
             </div>
@@ -141,9 +140,9 @@ const { data: bookData =[], isLoading: loading } = useQuery({
                 
 
                 <div className="card-body pt-0 flex-grow-0">
-                    <h2 className="card-title text-3xl justify-center text-black ">Total People </h2>
+                    <h2 className="card-title  text-xl md:text-3xl justify-center text-black ">Total People </h2>
                    
-                    <h2 className="card-title text-4xl justify-center text-[#AAB99A]  font-extrabold"> <CountUp end={users.length} /> <span className='text-white'><BsPerson /></span></h2>
+                    <h2 className="card-title  text-2xl md:text-4xl justify-center text-[#AAB99A]  font-extrabold"> <CountUp end={users?.count || 0} /> <span className='text-white'><BsPerson /></span></h2>
                     
                 </div>
             </div>

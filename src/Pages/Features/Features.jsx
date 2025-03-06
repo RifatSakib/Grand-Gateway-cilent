@@ -58,7 +58,7 @@ const Features = () => {
                     </div>
 
                     <div className="card-body pt-0 flex-grow-0">
-                        <h2 className="card-title text-3xl justify-center text-black">Real-Time Tracking</h2>
+                        <h2 className="card-title text-xl md:text-3xl justify-center text-black">Real-Time Tracking</h2>
                         <p className='text-justify text-gray-600'>Stay informed every step of the way! Our real-time tracking feature allows you to monitor your parcel's journey from pickup to delivery, ensuring peace of mind.</p>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ const Features = () => {
                     </div>
 
                     <div className="card-body pt-0 flex-grow-0">
-                        <h2 className="card-title text-3xl justify-center text-black ">Parcel Safety</h2>
+                        <h2 className="card-title  text-xl md:text-3xl justify-center text-black ">Parcel Safety</h2>
                         <p className='text-justify text-gray-600'>Your parcels are in safe hands! Our delivery personnel are thoroughly vetted and trained to ensure secure handling and delivery of your items.</p>
                     </div>
                 </div>
@@ -98,7 +98,7 @@ const Features = () => {
                     </div>
 
                     <div className="card-body pt-0 flex-grow-0">
-                        <h2 className="card-title text-3xl justify-center text-black">Super Fast Delivery</h2>
+                        <h2 className="card-title  text-xl md:text-3xl justify-center text-black">Super Fast Delivery</h2>
                         <p className='text-justify text-gray-600'>Experience lightning-fast delivery! With our optimized routes and dedicated delivery personnel, your parcels reach their destination in record time.</p>
                     </div>
                 </div>

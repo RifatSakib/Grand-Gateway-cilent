@@ -46,7 +46,7 @@ const Banner = () => {
                    
                     <h1
                   
-                     className="mb-5 text-5xl md:text-8xl font-bold pt-2 text-red-600 font-bold  md:font-extrabold shadow-xl rounded-full">Grand-<span className='text-orange-500'>Gateway</span></h1>
+                     className="mb-5 text-4xl md:text-8xl font-bold pt-2 text-red-600 font-bold  md:font-extrabold shadow-xl rounded-full">Grand-<span className='text-orange-500'>Gateway</span></h1>
                     
                     
                     <p 

@@ -84,6 +84,7 @@ const AllParcels = () => {
             toast.error(err.response.data)
         }
 
+        reset();
     };
 
     return (
@@ -135,54 +136,53 @@ const AllParcels = () => {
 
             {/* Modal */}
             {isOpen && selectedItem && (
-                <dialog className="modal absolute" open>
-                    <div className="modal-box">
-                        <h3 className="font-bold text-lg">{selectedItem.name}</h3>
-                        <h3 className="font-bold text-lg">{selectedItem.email}</h3>
+    <dialog className="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" open>
+        <div className="modal-box max-w-lg w-full max-h-[80vh] overflow-y-auto p-6 bg-white rounded-lg shadow-lg">
+            <h3 className="font-bold text-lg">{selectedItem.name}</h3>
+            <h3 className="font-bold text-lg">{selectedItem.email}</h3>
 
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                {/* Select Delivery Man */}
+                <div className="form-control w-full">
+                    <label className="label">
+                        <span className="label-text">Pick Delivery Man</span>
+                    </label>
+                    <select
+                        {...register('deliveryMan', { required: true })}
+                        className="p-2 border border-lime-300 focus:outline-lime-500 rounded-md text-gray-900 bg-white"
+                    >
+                        <option value="" disabled selected>Pick Delivery Man</option>
+                        {deliverman.map((dItem) => (
+                            <option value={dItem._id} key={dItem._id}>
+                                {dItem.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
+                {/* Approximate Date */}
+                <div className="form-control w-full">
+                    <label className="label">
+                        <span className="label-text">Approximate Date</span>
+                    </label>
+                    <input
+                        type="date"
+                        {...register('approximateDate', { required: true })}
+                        className="input input-bordered w-full"
+                    />
+                </div>
 
-                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                            {/* Select Delivery Man */}
-                            <div className="form-control w-full">
-                                <label className="label">
-                                    <span className="label-text">Pick Delivery Man</span>
-                                </label>
-                                <select
-                                    {...register('deliveryMan', { required: true })} // Register the select input
-                                    className='p-1 border-2 border-lime-300 focus:outline-lime-500 rounded-md text-gray-900 whitespace-no-wrap bg-white'
-                                >
-                                    <option value="" disabled selected>Pick Delivery Man</option>
-                                    {deliverman.map((dItem) => (
-                                        <option value={dItem._id} key={dItem._id}>
-                                            {dItem.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
+                {/* Submit Button */}
+                <button type="submit" className="btn btn-primary w-full">Submit</button>
+            </form>
 
-                            {/* Approximate Date */}
-                            <div className="form-control w-full">
-                                <label className="label">
-                                    <span className="label-text">Approximate Date</span>
-                                </label>
-                                <input
-                                    type="date"
-                                    {...register('approximateDate', { required: true })} // Register the date input
-                                    className="input input-bordered w-full"
-                                />
-                            </div>
+            <div className="modal-action flex justify-end mt-4">
+                <button className="btn" onClick={closeModal}>Close</button>
+            </div>
+        </div>
+    </dialog>
+)}
 
-                            {/* Submit Button */}
-                            <button type="submit" className="btn btn-primary">Submit</button>
-                        </form>
-
-                        <div className="modal-action">
-                            <button className="btn" onClick={closeModal}>Close</button>
-                        </div>
-                    </div>
-                </dialog>
-            )}
         </div>
     );
 };

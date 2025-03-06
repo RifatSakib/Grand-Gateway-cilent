@@ -2,28 +2,25 @@ import { useQuery } from "@tanstack/react-query";
 import { FaTrashAlt, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
 import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
+import { useContext } from "react";
+import { AuthContext } from "../../../Providers/AuthProvider";
 
 
 const AllUsers = () => {
     const axiosSecure = UseAxiosSecure();
-
-
-    // const { data: users = [], refetch } = useQuery({
-    //     queryKey: ['users'],
-    //     queryFn: async () => {
-    //         const res = await axiosSecure.get('/users');
-    //         return res.data;
-    //     }
-    // })
+  const { user, loading } = useContext(AuthContext);
+  
 
 
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
+        enabled: !loading && !!user?.email,
         queryFn: async () => {
             const res = await axiosSecure.get('/api/users-with-bookings'); // Updated API endpoint
             return res.data;
         }
     });
+
 
     const handleMakeAdmin = user => {
         axiosSecure.patch(`/users/admin/${user._id}`)
@@ -112,7 +109,7 @@ const AllUsers = () => {
                     </thead>
                     <tbody>
                         {
-                            users.map((user, index) => <tr key={user._id}>
+                            users && users.map((user, index) => <tr key={user._id}>
                                 <th>{index + 1}</th>
                                 <td>{user.name}</td>
                                 <td>{user.phone}</td>
