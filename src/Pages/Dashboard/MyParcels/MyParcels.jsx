@@ -152,261 +152,264 @@ const MyParcels = () => {
     }
 
     return (
-        <div className=' w-8/12 flex flex-col'>
-            <div className="text-center">
-                <h1 className="text-5xl font-bold">My Parcel</h1>
+        <div >
+            <div className="text-center w-full">
+                <h1 className="text-3xl md:text-5xl font-bold ">My Parcel</h1>
 
             </div>
 
+            <div className=' w-8/12 flex flex-col'>
 
-            <div className="overflow-x-auto py-7  mx-auto">
-                <table className="table ">
-                    {/* head */}
-                    <thead>
-                        <tr>
-                            <th>
-                                #
-                            </th>
-                            <th>Parcel Type</th>
-                            <th>Requested Delivery Date</th>
-                            <th>Approximate Delivery Date</th>
-                            <th>Booking Date</th>
-                            <th>Delivery Men ID</th>
-                            <th>Booking Status</th>
-                            <th>Update</th>
-                            <th>Cancel</th>
-                            <th>Review</th>
-                            <th>Pay</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            book.map((item, index) => <tr key={item._id}>
-                                <td>
-                                    {index + 1}
-                                </td>
-
-
-                                <td>
-                                    {item?.parcelType}
-                                </td>
-                                <td>
-                                    {item?.requestedDeliveryDate}
-                                </td>
-                                <td>
-                                    {item?.approximateDate}
-                                </td>
-                                <td>
-                                    {item?.bookingDate}
-                                </td>
-                                <td>
-                                    {item?.deliveryMan_Id}
-
-                                </td>
-
-                                <td>
-                                    {item?.status}
-                                </td>
+                <div className="overflow-x-auto py-7  mx-auto">
+                    <table className="table ">
+                        {/* head */}
+                        <thead>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>Parcel Type</th>
+                                <th>Requested Delivery Date</th>
+                                <th>Approximate Delivery Date</th>
+                                <th>Booking Date</th>
+                                <th>Delivery Men ID</th>
+                                <th>Booking Status</th>
+                                <th>Update</th>
+                                <th>Cancel</th>
+                                <th>Review</th>
+                                <th>Pay</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                book.map((item, index) => <tr key={item._id}>
+                                    <td>
+                                        {index + 1}
+                                    </td>
 
 
-                                <td>
-                                    <Link to={`/dashboard/updateItem/${item._id}`}>
-                                        <button
-                                            className="btn btn-ghost btn-xs bg-yellow-500">
-                                            Update
-                                        </button>
-                                    </Link>
-                                </td>
+                                    <td>
+                                        {item?.parcelType}
+                                    </td>
+                                    <td>
+                                        {item?.requestedDeliveryDate}
+                                    </td>
+                                    <td>
+                                        {item?.approximateDate}
+                                    </td>
+                                    <td>
+                                        {item?.bookingDate}
+                                    </td>
+                                    <td>
+                                        {item?.deliveryMan_Id}
+
+                                    </td>
+
+                                    <td>
+                                        {item?.status}
+                                    </td>
 
 
-                                <td>
+                                    <td>
+                                        <Link to={`/dashboard/updateItem/${item._id}`}>
+                                            <button
+                                                className="btn btn-ghost btn-xs bg-yellow-500">
+                                                Update
+                                            </button>
+                                        </Link>
+                                    </td>
 
-                                    {item?.status === "pending" ? (
 
-                                        <button
-                                            onClick={() => handleCancel(item)}
-                                            className="btn btn-error btn-xs ">
-                                            Cancel
-                                        </button>
-                                        ):(
+                                    <td>
+
+                                        {item?.status === "pending" ? (
 
                                             <button
-                                            onClick={() => handleCancel(item)}
-                                            className="btn btn-error btn-xs " disabled>
-                                            Cancel
-                                        </button>
+                                                onClick={() => handleCancel(item)}
+                                                className="btn btn-error btn-xs ">
+                                                Cancel
+                                            </button>
+                                        ) : (
+
+                                            <button
+                                                onClick={() => handleCancel(item)}
+                                                className="btn btn-error btn-xs " disabled>
+                                                Cancel
+                                            </button>
                                         )
-                                    
-                                }
 
-                                </td>
+                                        }
 
-
-                                <td>
-
-                                {item?.status === "delivered" ? (
-
-                                    <button
-
-                                        onClick={() => handleReview(item)}
-                                        className="btn btn-success btn-xs">
-                                        review
-                                    </button>
-                                ):(
-                                    <button
-
-                                        onClick={() => handleReview(item)}
-                                        className="btn btn-success btn-xs hidden">
-                                        review
-                                    </button>
-                                )}
-                                </td>
-
-                                <td>
-
-                                <Link to={`/dashboard/payment/${item._id}`}>
-                                
-                                    <button
-
-                                        className="btn btn-accent btn-xs">
-                                        pay
-                                    </button>
-                                </Link>
-
-                                </td>
+                                    </td>
 
 
+                                    <td>
+
+                                        {item?.status === "delivered" ? (
+
+                                            <button
+
+                                                onClick={() => handleReview(item)}
+                                                className="btn btn-success btn-xs">
+                                                review
+                                            </button>
+                                        ) : (
+                                            <button
+
+                                                onClick={() => handleReview(item)}
+                                                className="btn btn-success btn-xs hidden">
+                                                review
+                                            </button>
+                                        )}
+                                    </td>
+
+                                    <td>
+
+                                        <Link to={`/dashboard/payment/${item._id}`}>
+
+                                            <button
+
+                                                className="btn btn-accent btn-xs">
+                                                pay
+                                            </button>
+                                        </Link>
+
+                                    </td>
 
 
-                            </tr>)
-                        }
-                    </tbody>
 
 
-                </table>
+                                </tr>)
+                            }
+                        </tbody>
+
+
+                    </table>
+                </div>
+
+
+                {/* Modal */}
+                {isOpen && selectedItem && (
+                    <dialog className="modal absolute" open>
+                        <div className="modal-box">
+                            <h3 className='text-center text-xl font-bold'>Review</h3>
+                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                                {/* Select Delivery Man */}
+
+                                <div className="form-control w-full my-1">
+
+                                    <label className="label">
+                                        <span className="label-text">User's Name</span>
+                                    </label>
+
+                                    {
+
+                                        user && user?.displayName ? (
+
+                                            <input
+                                                readOnly
+                                                defaultValue={user.displayName}
+                                                type="text"
+                                                placeholder="Name"
+                                                {...register('name', { required: true })}
+
+                                                className="input input-bordered w-full" />
+
+                                        ) : (
+                                            <input
+                                                readOnly
+                                                type="text"
+                                                placeholder="Name (read-only)"
+                                                {...register('name', { required: true })}
+
+                                                className="input input-bordered w-full" />
+
+                                        )
+                                    }
+
+
+                                </div>
+
+
+                                <div className="form-control w-full my-1">
+
+                                    <label className="label">
+                                        <span className="label-text">User's Image</span>
+                                    </label>
+                                    <input
+                                        readOnly
+                                        defaultValue={user.photoURL}
+                                        type="text"
+                                        placeholder="photoURL"
+                                        {...register('photoURL', { required: true })}
+
+                                        className="input input-bordered w-full" />
+
+
+
+                                </div>
+
+                                <div className="form-control w-full my-1">
+
+                                    <label className="label">
+                                        <span className="label-text">Ratings</span>
+                                    </label>
+                                    <input
+                                        type="number"
+                                        placeholder="Rate me Out Of 5"
+                                        {...register('ratings', { required: true })}
+                                        className="input input-bordered w-full"
+                                        step="0.1" // for fractional values
+                                        min="0"
+                                        max="5"
+                                    />
+
+                                </div>
+
+                                <div className="form-control w-full my-1">
+
+                                    <label className="label">
+                                        <span className="label-text">FeedBack</span>
+                                    </label>
+                                    <textarea
+                                        style={{ height: "100px", width: "300px" }}
+
+                                        type="text"
+                                        placeholder="FeedBack Text"
+                                        {...register('feedBack', { required: true })}
+                                        className="input input-bordered w-full" />
+
+                                </div>
+
+
+                                <div className="form-control w-full my-1">
+
+                                    <label className="label">
+                                        <span className="label-text">Delivery Men’s ID</span>
+                                    </label>
+                                    <input
+                                        readOnly
+                                        type="text"
+                                        defaultValue={selectedItem?.deliveryMan_Id}
+                                        placeholder="Rate me Out Of 5"
+                                        {...register('deliveryManID', { required: true })}
+                                        className="input input-bordered w-full" />
+
+                                </div>
+
+
+                                {/* Submit Button */}
+                                <button type="submit" className="btn btn-primary">Submit</button>
+                            </form>
+
+                            <div className="modal-action">
+                                <button className="btn" onClick={closeModal}>Close</button>
+                            </div>
+                        </div>
+                    </dialog>
+                )}
             </div>
 
-
-            {/* Modal */}
-            {isOpen && selectedItem && (
-                <dialog className="modal absolute" open>
-                    <div className="modal-box">
-                        <h3 className='text-center text-xl font-bold'>Review</h3>
-                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                            {/* Select Delivery Man */}
-
-                            <div className="form-control w-full my-1">
-
-                                <label className="label">
-                                    <span className="label-text">User's Name</span>
-                                </label>
-
-                                {
-
-                                    user && user?.displayName ? (
-
-                                        <input
-                                            readOnly
-                                            defaultValue={user.displayName}
-                                            type="text"
-                                            placeholder="Name"
-                                            {...register('name', { required: true })}
-
-                                            className="input input-bordered w-full" />
-
-                                    ) : (
-                                        <input
-                                            readOnly
-                                            type="text"
-                                            placeholder="Name (read-only)"
-                                            {...register('name', { required: true })}
-
-                                            className="input input-bordered w-full" />
-
-                                    )
-                                }
-
-
-                            </div>
-
-
-                            <div className="form-control w-full my-1">
-
-                                <label className="label">
-                                    <span className="label-text">User's Image</span>
-                                </label>
-                                <input
-                                    readOnly
-                                    defaultValue={user.photoURL}
-                                    type="text"
-                                    placeholder="photoURL"
-                                    {...register('photoURL', { required: true })}
-
-                                    className="input input-bordered w-full" />
-
-
-
-                            </div>
-
-                            <div className="form-control w-full my-1">
-
-                                <label className="label">
-                                    <span className="label-text">Ratings</span>
-                                </label>
-                                <input
-                                    type="number"
-                                    placeholder="Rate me Out Of 5"
-                                    {...register('ratings', { required: true })}
-                                    className="input input-bordered w-full"
-                                    step="0.1" // for fractional values
-                                    min="0"
-                                    max="5"
-                                />
-
-                            </div>
-
-                            <div className="form-control w-full my-1">
-
-                                <label className="label">
-                                    <span className="label-text">FeedBack</span>
-                                </label>
-                                <textarea
-                                    style={{ height: "100px", width: "300px" }}
-
-                                    type="text"
-                                    placeholder="FeedBack Text"
-                                    {...register('feedBack', { required: true })}
-                                    className="input input-bordered w-full" />
-
-                            </div>
-
-
-                            <div className="form-control w-full my-1">
-
-                                <label className="label">
-                                    <span className="label-text">Delivery Men’s ID</span>
-                                </label>
-                                <input
-                                    readOnly
-                                    type="text"
-                                    defaultValue={selectedItem?.deliveryMan_Id}
-                                    placeholder="Rate me Out Of 5"
-                                    {...register('deliveryManID', { required: true })}
-                                    className="input input-bordered w-full" />
-
-                            </div>
-
-
-                            {/* Submit Button */}
-                            <button type="submit" className="btn btn-primary">Submit</button>
-                        </form>
-
-                        <div className="modal-action">
-                            <button className="btn" onClick={closeModal}>Close</button>
-                        </div>
-                    </div>
-                </dialog>
-            )}
 
 
 

@@ -6,7 +6,7 @@ import CheckoutForm from './CheckoutForm';
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
 const Payment = () => {
     return (
-        <div>
+        <div className='w-full'>
             <Elements stripe={stripePromise} >
                 <CheckoutForm />
             </Elements>

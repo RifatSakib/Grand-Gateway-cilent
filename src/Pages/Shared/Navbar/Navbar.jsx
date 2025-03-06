@@ -23,6 +23,12 @@ const Navbar = () => {
   const [isAdmin] = UseAdmin();
   const [isDeliveryman] = UseDeliveryman();
 
+  const [isOpen, setIsOpen] = useState(false)
+
+
+
+
+
   const { data: book = [], isPending: loading, refetch } = useQuery({
     queryKey: ['abcd', user?.email],
     enabled: !!localStorage.getItem('access-token'),
@@ -160,62 +166,82 @@ const Navbar = () => {
           </div>
         </div>
         <div className="login flex gap-2 items-center">
-          <div className=" ">
+
+          <div className="relative">
             {user && user?.email ? (
-              <div>
+              <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
+                <div>
+                  {userData?.image2 ? (
+                    <img
+                      className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border-2 border-white"
+                      src={userData.image2}
+                      alt="User Profile"
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : user?.photoURL ? (
+                    <img
+                      className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border-2 border-white"
+                      src={user.photoURL}
+                      alt="User Profile"
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
 
+                    <span className="text-2xl md:text-4xl">
+                      <RxAvatar />
+                    </span>
 
-                <details className="dropdown leading-none  ">
-                  <summary className="border-none m-1 p-0 outline-none">
+                  )}
+                </div>
 
-                    {user && user?.photoURL &&  (
-                      <div>
-                        { user && userData?.image2 ? (
-                          <img className="w-8 md:w-10 rounded-full" src={userData.image2} alt="User Profile" referrerPolicy='no-referrer' />
-                        ) : user && user?.photoURL ? (
-                          <img className="w-8 md:w-10 rounded-full" src={user.photoURL} alt="User Profile" referrerPolicy='no-referrer' />
-                        ) : (
-                          <span className="text-2xl md:text-4xl">
-                            <RxAvatar />
-                          </span>
-                        )}
-                      </div>
-                    )}
+                {/* Modal Dropdown */}
+                {isOpen && (
+                  <div
+                    className="absolute rounded-lg shadow-lg w-[40vw] md:w-[12vw] bg-white right-0 top-14 text-sm p-3 border border-gray-200 z-50"
+                  >
+                    <p className="cursor-not-allowed text-gray-700 font-bold text-center border-b pb-2">{user.displayName}</p>
 
+                    <div className="mt-2 space-y-2">
+                      {user && isAdmin && (
+                        <Link to="/dashboard/statistics" className=" text-blue-600  text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
+                          📊 Admin Dashboard
+                        </Link>
+                      )}
+                      {user && isDeliveryman && (
+                        <Link to="/dashboard/myDeliveryList" className=" text-blue-600 text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
+                          🚚 My Dashboard
+                        </Link>
+                      )}
+                      {user && !isDeliveryman && !isAdmin && (
+                        <Link to="/dashboard/bookaparcel" className=" text-blue-600 text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
+                          📦 My Dashboard
+                        </Link>
+                      )}
+                    </div>
 
-
-
-
-                  </summary>
-                  <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-36 p-2 shadow -ml-24">
-                    <li className=' cursor-not-allowed bg-none pl-4 font-extrabold '>{user.displayName}</li>
-
-
-                    {
-                      user && isAdmin && <li className='text-yellow-500 font-bold'><Link to="/dashboard/statistics">Dashboard</Link></li>
-                    }
-
-                    {
-                      user && isDeliveryman && <li className='text-yellow-500 font-bold'><Link to="/dashboard/myDeliveryList">Dashboard</Link></li>
-                    }
-
-                    {
-                      user && !isDeliveryman && !isAdmin && <li className='text-yellow-500 font-bold'><Link to="/dashboard/bookaparcel">Dashboard</Link></li>
-                    }
-
-
-                    <Link to="/"> <li onClick={handleLogOut} className='text-red-500 font-bold'><a>Log-Out</a></li></Link>
-                  </ul>
-                </details>
-
-
+                    {/* Logout Button */}
+                    <div className="mt-3 border-t pt-2">
+                      <Link to="/">
+                        <p
+                          onClick={handleLogOut}
+                          className="text-red-500 font-medium text-center hover:bg-red-100 px-3 py-1 rounded-md transition cursor-pointer"
+                        >
+                          🚪 Log Out
+                        </p>
+                      </Link>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
-              //   <img className='text-white' src={userIcon} alt="" />
-              <span className=' text-2xl md:text-5xl'> <RxAvatar /> </span>
+
+              <span className="text-2xl md:text-4xl">
+                <RxAvatar />
+              </span>
+
+
             )}
           </div>
-
 
           {user && user?.email ?
 
@@ -226,12 +252,9 @@ const Navbar = () => {
 
             (
               <Link to="/login" >
-                <button className="btn btn-neutral rounded-none text-white w-10 md:w-20"> Login</button>
+                <button className="btn btn-outline rounded-full font-bold w-10 md:w-20"> Login</button>
               </Link>
             )}
-
-
-
 
 
 

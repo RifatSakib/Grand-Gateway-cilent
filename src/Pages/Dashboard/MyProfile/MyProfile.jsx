@@ -83,7 +83,7 @@ const MyProfile = () => {
     return (
         <>
             <div className="text-center">
-                <h1 className="text-5xl font-bold">MY Profile</h1>
+                <h1 className="text-3xl md:text-5xl font-bold">MY Profile</h1>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -94,11 +94,11 @@ const MyProfile = () => {
 
                             { userData?.image2? (<img
                                 src={ userData?.image2} // Show updated image if available
-                                className="max-w-sm rounded-lg shadow-2xl"
+                                className="w-32 h-32 sm:w-40 sm:h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full shadow-2xl object-cover"
                                 alt="Profile"
                             />):(<img
                                 src={ user?.photoURL} // Show updated image if available
-                                className="max-w-sm rounded-lg shadow-2xl"
+                                className="w-32 h-32 sm:w-40 sm:h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full shadow-2xl object-cover"
                                 alt="Profile"
                             />)
 
