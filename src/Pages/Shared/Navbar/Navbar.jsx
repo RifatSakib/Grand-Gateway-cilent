@@ -21,7 +21,8 @@ const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   console.log(user?.photoURL);
   const [isAdmin] = UseAdmin();
-  const [isDeliveryman] = UseDeliveryman();
+  const [isDeliveryman, isDeliverymanLoading] = UseDeliveryman();
+  console.log(isDeliveryman)
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -202,7 +203,9 @@ const Navbar = () => {
                     <p className="cursor-not-allowed text-gray-700 font-bold text-center border-b pb-2">{user.displayName}</p>
 
                     <div className="mt-2 space-y-2">
-                      {user && isAdmin && (
+
+
+                    {user && isAdmin && (
                         <Link to="/dashboard/statistics" className=" text-blue-600  text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
                           📊 Admin Dashboard
                         </Link>
@@ -217,6 +220,7 @@ const Navbar = () => {
                           📦 My Dashboard
                         </Link>
                       )}
+                      
                     </div>
 
                     {/* Logout Button */}

@@ -19,6 +19,7 @@ import MyReviews from '../Pages/Dashboard/MyReviews/MyReviews';
 import AllDeliveryMan from '../Pages/Dashboard/AllDeliveryMan/AllDeliveryMan';
 import AdminStatistics from '../Pages/Dashboard/Statistics/AdminStatistics';
 import Payment from '../Pages/Dashboard/Payment/Payment';
+import DeliverymanRoute from './DeliverymanRoute';
 
 export const router = createBrowserRouter([
   {
@@ -82,12 +83,12 @@ export const router = createBrowserRouter([
 
     {
       path: 'myDeliveryList',
-      element: <PrivateRoute> <MyDeliveryList></MyDeliveryList> </PrivateRoute> 
+      element: <PrivateRoute> <DeliverymanRoute> <MyDeliveryList></MyDeliveryList></DeliverymanRoute>  </PrivateRoute> 
     },
 
     {
       path: 'myReview',
-      element: <PrivateRoute><MyReviews></MyReviews> </PrivateRoute> 
+      element: <PrivateRoute> <DeliverymanRoute> <MyReviews></MyReviews> </DeliverymanRoute> </PrivateRoute> 
     },
 
 

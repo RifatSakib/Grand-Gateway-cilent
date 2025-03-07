@@ -12,7 +12,7 @@ const UseDeliveryman = () => {
         queryFn: async () => {
             console.log('asking or checking is Deliveryman', user)
             const res = await axiosSecure.get(`/users/deliveryman/${user.email}`);
-            // console.log(res.data);
+            console.log(res.data);
             return res.data?.deliveryman;
         }
     })
