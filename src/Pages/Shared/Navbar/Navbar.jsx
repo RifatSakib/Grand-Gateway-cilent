@@ -12,6 +12,7 @@ import { CiBellOn } from 'react-icons/ci';
 import { useQuery } from '@tanstack/react-query';
 import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
+import { Button } from "@/components/ui/button";
 
 
 
@@ -22,7 +23,7 @@ const Navbar = () => {
   console.log(user?.photoURL);
   const [isAdmin] = UseAdmin();
   const [isDeliveryman, isDeliverymanLoading] = UseDeliveryman();
-  console.log(isDeliveryman)
+  console.log(isDeliveryman, isAdmin)
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -61,18 +62,24 @@ const Navbar = () => {
 
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
-  // Handle Theme Toggle
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-  };
+   // Sync theme with DOM on mount
+    useEffect(() => {
+      const storedTheme = localStorage.getItem("theme") || "light";
+      setTheme(storedTheme);
+      document.documentElement.setAttribute("data-theme", storedTheme);
+    }, []); // Runs once on mount
+  
+    const toggleTheme = () => {
+      const newTheme = theme === "dark" ? "light" : "dark";
+      setTheme(newTheme);
+      document.documentElement.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+    };
 
   // Apply stored theme on page load
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
+  // useEffect(() => {
+  //   document.documentElement.setAttribute("data-theme", theme);
+  // }, [theme]);
 
 
 
@@ -84,6 +91,12 @@ const Navbar = () => {
       .catch(error => console.log(error));
   }
 
+  // if(isDeliverymanLoading){
+  //   return <h1>Loading...</h1>
+  // }
+
+
+
   const links = <>
 
     <li className='font-bold text-lg text-black lg:text-white'><Link to="/">Home</Link></li>
@@ -92,7 +105,7 @@ const Navbar = () => {
 
 
   return (
-    <div className="navbar max-w-screen-xl md:fixed  bg-[#727D73] bg-opacity-80 z-10">
+    <div className="navbar sticky top-0 left-0 md:fixed  bg-[#727D73] bg-opacity-80 z-10 px-5 py-6">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -205,12 +218,12 @@ const Navbar = () => {
                     <div className="mt-2 space-y-2">
 
 
-                    {user && isAdmin && (
+                      {/* {user && isAdmin && !isDeliveryman && (
                         <Link to="/dashboard/statistics" className=" text-blue-600  text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
                           📊 Admin Dashboard
                         </Link>
                       )}
-                      {user && isDeliveryman && (
+                      {user && isDeliveryman && !isAdmin &&  (
                         <Link to="/dashboard/myDeliveryList" className=" text-blue-600 text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
                           🚚 My Dashboard
                         </Link>
@@ -219,8 +232,42 @@ const Navbar = () => {
                         <Link to="/dashboard/bookaparcel" className=" text-blue-600 text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
                           📦 My Dashboard
                         </Link>
-                      )}
-                      
+                      )} */}
+
+                      {
+                        user ? (
+                          isAdmin ? (
+
+                            <Link to="/dashboard/statistics" className=" text-blue-600  text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
+                              📊 Admin Dashboard
+                            </Link>
+                          )
+
+                            :
+
+                            (
+                              isDeliveryman ? (
+                                <Link to="/dashboard/myDeliveryList" className=" text-blue-600 text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
+                                  🚚 My Dashboard
+                                </Link>
+                              )
+                                :
+                                (<Link to="/dashboard/bookaparcel" className=" text-blue-600 text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
+                                  📦 My Dashboard
+                                </Link>)
+
+                            )
+
+
+                        )
+                          :
+
+                          (<Link to="/dashboard/bookaparcel" className=" text-blue-600 text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
+                            📦 My Dashboard
+                          </Link>)
+
+                      }
+
                     </div>
 
                     {/* Logout Button */}

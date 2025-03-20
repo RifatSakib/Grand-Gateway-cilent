@@ -22,78 +22,75 @@ const SignUp = () => {
 
     // console.log(user)
     const onSubmit = async (data) => {
-
-        setLoading(true);
-
-        // img upolading process start
-
-        const imageFile = new FormData();
-        imageFile.append("image", data.photoURL[0]);
-
-
-        // Upload image to imgbb
-        const res = await axiosPublic.post(image_hosting_api, imageFile, {
-            headers: { 'Content-Type': 'multipart/form-data' },
-        });
-
-        if (!res.data.success) {
-            throw new Error("Image upload failed");
+        setLoading(true); // Start loading
+    
+        try {
+            // Upload Image
+            const imageFile = new FormData();
+            imageFile.append("image", data.photoURL[0]);
+    
+            const res = await axiosPublic.post(image_hosting_api, imageFile, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+    
+            if (!res.data.success) {
+                throw new Error("Image upload failed");
+            }
+    
+            const imgUrl = res.data.data.url;
+            console.log("Image URL:", imgUrl);
+    
+            // Create User in Firebase
+            const result = await createUser(data.email, data.password);
+            const loggedUser = result.user;
+            console.log("New User:", loggedUser);
+    
+            // Update User Profile
+            await updateUserProfile(data.name, imgUrl);
+    
+            // Create User Entry in Database
+            const userInfo = {
+                name: data.name,
+                email: data.email,
+                image: imgUrl, // Use the uploaded image URL
+                phone: data.phone,
+            };
+    
+            // Add role if it's a deliveryman
+            if (data.role === "deliveryman") {
+                userInfo.role = "deliveryman";
+            }
+    
+            const dbRes = await axiosPublic.post("/users", userInfo);
+            if (dbRes.data.insertedId) {
+                console.log("User added to the database");
+                reset();
+                setLoading(false);
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "User created successfully.",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+    
+                navigate("/");
+                navigate(0); // Refresh page
+            }
+        } catch (error) {
+            console.error("Signup Error:", error);
+            setLoading(false); // Stop loading
+    
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Signup failed!",
+                text: error.message,
+                showConfirmButton: true,
+            });
         }
-
-        const imgUrl = res.data.data.url;
-
-        console.log(imgUrl);
-        // console.log(data);
-
-
-
-
-        createUser(data.email, data.password)
-            .then(result => {
-                const loggedUser = result.user;
-                console.log(loggedUser);
-                const imgUrl = res.data.data.url;
-                updateUserProfile(data.name, imgUrl)
-                    .then(() => {
-                        // create user entry in the database
-                        const userInfo = {
-                            name: data.name,
-                            email: data.email,
-                            image: data.photoURL,
-                            phone: data.phone,
-
-                        }
-
-                        // Add role to userInfo if role is 'deliveryman'
-                        if (data.role === 'deliveryman') {
-                            userInfo.role = 'deliveryman';
-                        }
-
-                        axiosPublic.post('/users', userInfo)
-                            .then(res => {
-                                if (res.data.insertedId) {
-                                    console.log('user added to the database')
-                                    reset();
-                                    setLoading(false);
-                                    Swal.fire({
-                                        position: 'top-end',
-                                        icon: 'success',
-                                        title: 'User created successfully.',
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    });
-                                    navigate('/');
-                                    navigate(0); //refresh the page again after sign up
-                                }
-                            })
-
-
-                    })
-                    .catch(error => console.log(error))
-
-            })
-
     };
+    
 
     return (
         <>
@@ -117,6 +114,8 @@ const SignUp = () => {
                             <Lottie animationData={signup}></Lottie>
 
                         </div>
+
+                        
                         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                                 <h1 className="text-2xl md:text-5xl font-bold">Sign up now!</h1>

@@ -87,7 +87,7 @@ const { data: bookData ={}, isLoading: loading } = useQuery({
         <>
 
         {/* statics cards */}
-        <div className=' grid md:grid-cols-3 gap-4 py-10 px-5 '>
+        <div className=' grid md:grid-cols-3 gap-4 py-8 md:py-14 w-11/12 mx-auto px-5 '>
 
        
 
@@ -101,13 +101,13 @@ const { data: bookData ={}, isLoading: loading } = useQuery({
             data-aos-delay="100"
             data-aos-duration="1000"
 
-            className="card glass bg-gray-500 py-4">
+            className="card glass  bg-[#AAB99A]  py-4">
                 
 
                 <div className="card-body pt-0 flex-grow-0">
                     <h2 className="card-title  text-xl md:text-3xl justify-center text-black">Total Parcels Booked</h2>
                    
-                    <h2 className="card-title  text-2xl md:text-4xl justify-center text-[#AAB99A] font-extrabold "> <CountUp end={bookData?.count || 0} /> <span className='text-white '><IoMdNotificationsOutline /></span></h2>
+                    <h2 className="card-title  text-2xl md:text-4xl justify-center text-white font-extrabold "> <CountUp end={bookData?.count || 0} /> <span className='text-white '><IoMdNotificationsOutline /></span></h2>
                     
                 </div>
             </div>
@@ -118,13 +118,13 @@ const { data: bookData ={}, isLoading: loading } = useQuery({
             data-aos-delay="100"
             data-aos-duration="1000"
 
-            className="card glass bg-gray-600 py-4">
+            className="card glass bg-[#99a78b]  py-4">
                 
 
                 <div className="card-body pt-0 flex-grow-0">
                     <h2 className="card-title  text-xl md:text-3xl justify-center text-black">Total Parcels Delivered</h2>
                    
-                    <h2 className="card-title  text-2xl md:text-4xl justify-center text-[#AAB99A]  font-extrabold "> <CountUp end={deliveredbookdata?.count || 0} /> <span className='text-white'><CiDeliveryTruck /></span></h2>
+                    <h2 className="card-title  text-2xl md:text-4xl justify-center text-white  font-extrabold "> <CountUp end={deliveredbookdata?.count || 0} /> <span className='text-white'><CiDeliveryTruck /></span></h2>
                     
                 </div>
             </div>
@@ -136,13 +136,13 @@ const { data: bookData ={}, isLoading: loading } = useQuery({
             data-aos-delay="100"
             data-aos-duration="1000"
 
-            className="card glass bg-gray-700  py-4">
+            className="card glass bg-[#838f76] py-4">
                 
 
                 <div className="card-body pt-0 flex-grow-0">
                     <h2 className="card-title  text-xl md:text-3xl justify-center text-black ">Total People </h2>
                    
-                    <h2 className="card-title  text-2xl md:text-4xl justify-center text-[#AAB99A]  font-extrabold"> <CountUp end={users?.count || 0} /> <span className='text-white'><BsPerson /></span></h2>
+                    <h2 className="card-title  text-2xl md:text-4xl justify-center text-white font-extrabold"> <CountUp end={users?.count || 0} /> <span className='text-white'><BsPerson /></span></h2>
                     
                 </div>
             </div>

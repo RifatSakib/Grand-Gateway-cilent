@@ -1,11 +1,9 @@
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../../../Providers/AuthProvider';
-import UseDeliveryman from '../../../Hooks/UseDeliveryman';
-import UseAuth from '../../../Hooks/UseAuth';
-import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
+import UseAuth from '../../../Hooks/UseAuth';
+import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 import MyLocation from './MyLocation';
 
 const MyDeliveryList = () => {
@@ -15,55 +13,36 @@ const MyDeliveryList = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
 
-
-
     const closeModal = () => {
         setIsOpen(false);
-        setSelectedItem(null); // Reset selected item when closing the modal
+        setSelectedItem(null);
     };
 
     const handleManageLocation = (item) => {
-        setSelectedItem(item); // Set the selected item
-        setIsOpen(true); // Open the modal
+        setSelectedItem(item);
+        setIsOpen(true);
     };
 
-
-
-    const { data: deliveryman = {}, isLoading: isDeliverymanLoading } = useQuery({
+    const { data: deliveryman = {} } = useQuery({
         queryKey: [user?.email, 'deliveryman'],
-        enabled: !loading && !!user?.email, // Ensure user is logged in
+        enabled: !loading && !!user?.email,
         queryFn: async () => {
             const res = await axiosSecure.get(`/users/oneDeliveryman/${user.email}`);
-            return res.data.user || {}; // Ensure this returns an object
+            return res.data.user || {};
         }
     });
 
-
-
-    const { data: bookByDeliveryId = [], isLoading: isBooksLoading, refetch } = useQuery({
+    const { data: bookByDeliveryId = [], refetch } = useQuery({
         queryKey: [deliveryman?._id, 'bookByDeliveryId'],
-        enabled: !!deliveryman?._id, // Ensure deliveryman ID is available
+        enabled: !!deliveryman?._id,
         queryFn: async () => {
-            if (!deliveryman?._id) {
-                return []; // Return an empty array if no deliveryman ID
-            }
+            if (!deliveryman?._id) return [];
             const res = await axiosSecure.get(`/book/AllBookByDeliveryId/${deliveryman._id}`);
-            return res.data || []; // Ensure this returns an array
+            return res.data || [];
         }
     });
-
-
-    console.log(bookByDeliveryId)
-
-    // console.log(deliveryman._id)
-
-
-
 
     const handleCancel = async (item) => {
-        console.log(item._id)
-
-
         const result = await Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -74,43 +53,27 @@ const MyDeliveryList = () => {
             confirmButtonText: "Yes, cancel it!"
         });
 
-        // Check if the user confirmed the action
         if (result.isConfirmed) {
             try {
-                // Update order status
                 await axiosSecure.patch(`/book/cancel/${item._id}`);
-
-                // Call refetch to refresh UI (fetch orders data again)
-                refetch(); // Ensure refetch is defined in the scope
-
-                // Show success message
+                refetch();
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: `Properties Updated`,
+                    title: "Order Cancelled",
                     showConfirmButton: false,
                     timer: 1500
                 });
             } catch (err) {
-                console.error(err);
                 toast.error(err.response?.data || "An error occurred");
             }
         }
-
-
-
-    }
-
-
-
+    };
 
     const handleDeliver = async (item) => {
-        console.log(item._id)
-
-
         const result = await Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            text: "Confirm delivery?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -118,141 +81,99 @@ const MyDeliveryList = () => {
             confirmButtonText: "Yes, deliver it!"
         });
 
-        // Check if the user confirmed the action
         if (result.isConfirmed) {
             try {
-                // Update order status
                 await axiosSecure.patch(`/book/deliver/${item._id}`);
-
-                // Call refetch to refresh UI (fetch orders data again)
-                refetch(); // Ensure refetch is defined in the scope
-
-                // Show success message
+                refetch();
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: `Properties Updated`,
+                    title: "Order Delivered",
                     showConfirmButton: false,
                     timer: 1500
                 });
             } catch (err) {
-                console.error(err);
                 toast.error(err.response?.data || "An error occurred");
             }
         }
-
-
-    }
-
-
-
+    };
 
     return (
-        <div className='w-8/12 flex flex-col w-full relative'>
-            <div className="text-center">
-                <h1 className="text-5xl font-bold">My Delivery List {bookByDeliveryId.length}</h1>
+        <div className="w-full px-4 md:px-10 lg:px-16">
+            <div className="text-center py-6">
+                <h1 className="text-3xl md:text-4xl font-bold">My Delivery List ({bookByDeliveryId.length})</h1>
             </div>
 
-            <div className="overflow-x-auto py-7 mx-auto">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Booked User’s Name</th>
-                            <th>Receivers Name</th>
-                            <th>Booked User’s Phone</th>
-                            <th>Request Delivery Date</th>
-                            <th>Approximate Delivery Date</th>
-                            <th>Receivers phone number</th>
-                            <th>Receivers Address</th>
-                            <th>View Location</th>
-                            <th>Cancel</th>
-                            <th>Deliver</th>
+            <div className="overflow-x-auto">
+                <table className="table-auto min-w-full border-collapse border border-gray-200 shadow-md text-sm md:text-base">
+                    <thead className="bg-gray-100">
+                        <tr className="text-left">
+                            <th className="p-2 border">#</th>
+                            <th className="p-2 border">User Name</th>
+                            <th className="p-2 border">Receiver</th>
+                            <th className="p-2 border hidden md:table-cell">User Phone</th>
+                            <th className="p-2 border">Request Date</th>
+                            <th className="p-2 border">Approx. Date</th>
+                            <th className="p-2 border hidden lg:table-cell">Receiver Phone</th>
+                            <th className="p-2 border hidden lg:table-cell">Address</th>
+                            <th className="p-2 border">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {bookByDeliveryId.map((item, index) => (
-                            <tr key={item._id} >
-
-                                <td>{index + 1}</td>
-                                <td>{item.name}</td>
-                                <td>{item.receiverName}</td>
-                                <td>{item.phone}</td>
-                                <td>{item.requestedDeliveryDate}</td>
-                                <td>{item.approximateDate}</td>
-                                <td>{item.receiverPhoneNumber}</td>
-                                <td>{item.parcelDeliveryAddress}</td>
-                                <td>
-                                    <button
-
-                                        onClick={() => {
-                                            handleManageLocation(item);
-
-                                        }} // Pass the item to the handler
-
-                                        className="btn btn-outline btn-sm">
-                                        view location
-                                    </button>
+                            <tr key={item._id} className="hover:bg-gray-50">
+                                <td className="p-2 border">{index + 1}</td>
+                                <td className="p-2 border">{item.name}</td>
+                                <td className="p-2 border">{item.receiverName}</td>
+                                <td className="p-2 border hidden md:table-cell">{item.phone}</td>
+                                <td className="p-2 border">{item.requestedDeliveryDate}</td>
+                                <td className="p-2 border">{item.approximateDate}</td>
+                                <td className="p-2 border hidden lg:table-cell">{item.receiverPhoneNumber}</td>
+                                <td className="p-2 border hidden lg:table-cell">{item.parcelDeliveryAddress}</td>
+                                <td className="p-2 border">
+                                    <div className="flex flex-wrap md:flex-nowrap gap-1 md:gap-2 justify-center">
+                                        <button
+                                            onClick={() => handleManageLocation(item)}
+                                            className="btn btn-outline btn-xs md:btn-sm whitespace-nowrap"
+                                        >
+                                            View Location
+                                        </button>
+                                        <button
+                                            onClick={() => handleCancel(item)}
+                                            className="btn btn-error btn-xs md:btn-sm whitespace-nowrap"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            onClick={() => handleDeliver(item)}
+                                            className="btn btn-success btn-xs md:btn-sm whitespace-nowrap"
+                                        >
+                                            Deliver
+                                        </button>
+                                    </div>
                                 </td>
-                                <td>
-                                    <button
-                                        onClick={() => {
-                                            handleCancel(item)
 
-                                        }}
-                                        className="btn btn-error btn-sm">
-                                        cancel
-                                    </button>
-                                </td>
-                                <td>
-                                    <button
-                                        onClick={() => {
-                                            handleDeliver(item)
-
-                                        }}
-                                        className="btn btn-success btn-sm">
-                                        Deliver
-                                    </button>
-                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
 
-
             {/* Modal */}
             {isOpen && selectedItem && (
-                <dialog className="modal absolute" open style={{
-                    maxHeight: "90vh", // Ensure it doesn't get cut
-                    overflowY: "auto",
-                    width: "80vw", // Adjust modal width
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                }}>
-                    <div className="modal-box">
-                        <div className='flex justify-between'>
-                            <h3 className="font-bold text-lg">Map</h3>
-
-                            <div className="p-2">
-                                <button className="btn btn-error " onClick={closeModal}>Close</button>
-                            </div>
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white w-full md:w-3/4 lg:w-2/3 p-6 rounded-lg shadow-lg">
+                        <div className="flex justify-between">
+                            <h3 className="text-lg font-bold">Map</h3>
+                            <button className="btn btn-error" onClick={closeModal}>Close</button>
                         </div>
-
                         <MyLocation
                             deliveryAddressLatitude={selectedItem.deliveryAddressLatitude}
                             deliveryAddresslongitude={selectedItem.deliveryAddresslongitude}
-                        >
-
-                        </MyLocation>
-
-
-
+                        />
                     </div>
-                </dialog>
+                </div>
             )}
-
         </div>
     );
 };

@@ -32,12 +32,17 @@ AOS.init({
 
 const Banner = () => {
     return (
+
+        <div className=' py-8 md:py-14 pt-0'>
+
         <div
-            className="hero min-h-screen pt-10 md:pt-0"
+            className="hero md:min-h-screen h-80 mx-auto p-0 m-0"
             style={{
                 backgroundImage: `url(${bannerImage})`,
+               width: "80%"
             }}>
-            <div className="hero-overlay bg-opacity-0"></div>
+
+
             <div className="hero-content text-neutral-content text-center">
                 <div   data-aos="fade-right"
                     data-aos-delay="100"
@@ -58,6 +63,7 @@ const Banner = () => {
 
                 </div>
             </div>
+        </div>
         </div>
     );
 };

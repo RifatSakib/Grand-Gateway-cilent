@@ -41,7 +41,20 @@ const Login = () => {
                 });
                 navigate(from, { replace: true });
             })
-    }
+
+            .catch((error) => {
+                setLoading(false); // Stop loading
+    
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Invalid email or password!',
+                    text: error.message,
+                    showConfirmButton: true,
+                });
+            });
+    };
+    
 
 
 
@@ -60,7 +73,7 @@ const Login = () => {
             ) : (
 
 
-                <div className="hero min-h-screen bg-base-200 pt-20">
+                <div className="hero min-h-screen bg-base-200 md:pt-40">
                     <div className="hero-content flex-col md:flex-row-reverse">
                         <div className="text-center w-1/2 lg:text-left">
 
@@ -97,8 +110,6 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
-
-
 
             )}
         </>

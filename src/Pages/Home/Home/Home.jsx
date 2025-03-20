@@ -5,6 +5,7 @@ import Features from '../../Features/Features';
 import TopDelivery from '../TopDelivery/TopDelivery';
 import Slides from '../../Slides/Slides';
 import Accordion from '../../Accordion/Accordion';
+import Hero from '../../Hero/Hero';
 
 const Home = () => {
     return (
@@ -13,11 +14,12 @@ const Home = () => {
                 <title>Grand-Gatewy | Home</title>
             </Helmet>
 
-            <Slides></Slides>
+            <Slides className="w-full"></Slides>
             <Banner ></Banner>
             <Features></Features>
-            <Accordion></Accordion>
             <TopDelivery></TopDelivery>
+            <Accordion></Accordion>
+            <Hero></Hero>
 
 
 

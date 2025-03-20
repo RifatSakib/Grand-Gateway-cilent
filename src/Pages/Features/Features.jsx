@@ -41,7 +41,7 @@ const Features = () => {
             {/* statics cards */}
             <div
 
-                className='grid md:grid-cols-3 gap-4 py-10 px-5 '>
+                className='w-11/12 mx-auto grid md:grid-cols-3 gap-4 py-8 md:py-14 px-5 '>
 
                 {/* card 1 */}
                 <div
