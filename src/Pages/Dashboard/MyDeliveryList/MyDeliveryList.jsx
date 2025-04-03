@@ -146,7 +146,7 @@ const MyDeliveryList = () => {
                                         </button>
                                         <button
                                             onClick={() => handleDeliver(item)}
-                                            className="btn btn-success btn-xs md:btn-sm whitespace-nowrap"
+                                            className="btn bg-gradient-to-b from-[#7f8b73] via-[#95a387] to-[#b9cba7] bg-opacity-20 backdrop-blur-lg shadow-lg btn-xs md:btn-sm whitespace-nowrap"
                                         >
                                             Deliver
                                         </button>

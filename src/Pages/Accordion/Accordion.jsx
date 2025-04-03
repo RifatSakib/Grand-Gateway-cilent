@@ -37,7 +37,7 @@ const Accordion = () => {
         data-aos-duration="2000"
         className= ' py-8 md:py-14 flex flex-col gap-2 w-11/12 mx-auto px-5'>
 
-        <h1 className='text-xl md:text-3xl text-center font-bold pb-4'>Frequently asked questions</h1>
+        <h1 className='text-xl md:text-3xl text-center font-bold pb-4'>Frequently Asked Questions</h1>
 
             <div className="collapse bg-[#AAB99A]">
                 <input type="radio" name="my-accordion-1" defaultChecked />

@@ -124,7 +124,7 @@ const AllParcels = () => {
                                             setBookID(item._id);
                                         }} // Pass the item to the handler
 
-                                        className="btn btn-success btn-sm">
+                                        className="btn bg-gradient-to-b from-[#7f8b73] via-[#95a387] to-[#b9cba7] bg-opacity-20 backdrop-blur-lg shadow-lg  w-full text-black btn-sm">
                                         Manage
                                     </button>
                                 </td>
@@ -173,11 +173,11 @@ const AllParcels = () => {
                 </div>
 
                 {/* Submit Button */}
-                <button type="submit" className="btn btn-primary w-full">Submit</button>
+                <button type="submit" className="btn bg-gradient-to-b from-[#7f8b73] via-[#95a387] to-[#b9cba7] bg-opacity-20 backdrop-blur-lg shadow-lg  w-full text-black">Submit</button>
             </form>
 
             <div className="modal-action flex justify-end mt-4">
-                <button className="btn" onClick={closeModal}>Close</button>
+                <button className="btn btn-outline" onClick={closeModal}>Close</button>
             </div>
         </div>
     </dialog>

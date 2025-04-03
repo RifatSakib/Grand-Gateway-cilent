@@ -50,7 +50,7 @@ const MyReviews = () => {
                     myReview.map(item =>  
 
 
-                <div key={item._id} className="card bg-base-100 shadow-xl p-3 ">
+                <div key={item._id} className="card bg-base-100 shadow-xl p-3  border border-black">
                     <div className="flex items-center mb-4">
 
                         <img

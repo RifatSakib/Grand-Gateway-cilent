@@ -132,14 +132,14 @@ const AllUsers = () => {
 
                                 <td>
 
-                                    <button className="btn btn-xs btn-warning" onClick={() => handleMakeAdmin(user)}>Make Admin</button>
+                                    <button className="btn btn-xs bg-gradient-to-b from-[#7f8b73] via-[#95a387] to-[#b9cba7] bg-opacity-20 backdrop-blur-lg shadow-lg  w-full text-black" onClick={() => handleMakeAdmin(user)}>Make Admin</button>
 
                                    
                                 </td>
 
                                 <td>
 
-                                    <button className="btn btn-xs btn-error" onClick={() => handleMakeDeliveryman(user)}>Make Deliveryman</button>
+                                    <button className="btn btn-xs bg-gradient-to-b from-[#7f8b73] via-[#95a387] to-[#b9cba7] bg-opacity-20 backdrop-blur-lg shadow-lg  w-full text-black" onClick={() => handleMakeDeliveryman(user)}>Make Deliveryman</button>
 
                                  
                                 </td>

@@ -44,7 +44,7 @@ const Slides = () => {
 
                     <div id="slide1" className="carousel-item relative w-full p-0 m-0">
 
-                        <div className=' m-10 md:flex gap-4 p-4'>
+                        <div className=' mx-10 md:flex gap-4 p-4'>
 
                             <div className='w-full'>
 
@@ -82,10 +82,10 @@ const Slides = () => {
 
                     <div id="slide2" className="carousel-item relative w-full">
 
-                        <div className='m-10 md:flex gap-4 p-4'>
+                        <div className='mx-10 md:mt-10 md:flex gap-4 p-4'>
 
 
-                        <div className='w-9/12 mx-auto md:ml-10 md:mt-10'>
+                        <div className=' w-9/12 md:w-7/12 mx-auto md:ml-10 md:mt-10'>
                             <Lottie animationData={Bg}></Lottie>
 
                             </div>
@@ -123,7 +123,7 @@ const Slides = () => {
 
                     <div id="slide3" className="carousel-item relative w-full">
 
-                        <div className=' m-10 md:flex gap-4 p-4'>
+                        <div className=' mx-10 md:flex gap-4 p-4'>
 
                             <div className='w-full'>
 

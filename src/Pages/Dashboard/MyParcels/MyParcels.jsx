@@ -210,7 +210,7 @@ const MyParcels = () => {
                                         {item?.status === "delivered" ? (
                                             <button
                                                 onClick={() => handleReview(item)}
-                                                className="btn btn-success btn-xs whitespace-nowrap"
+                                                className="btn btn-success btn-xs whitespace-nowrap bg-gradient-to-b from-[#7f8b73] via-[#95a387] to-[#b9cba7] bg-opacity-20 backdrop-blur-lg shadow-lg"
                                             >
                                                 Review
                                             </button>
@@ -300,13 +300,13 @@ const MyParcels = () => {
                                 />
                             </div>
     
-                            <button type="submit" className="btn btn-primary w-full">
+                            <button type="submit" className="btn w-full bg-gradient-to-b from-[#7f8b73] via-[#95a387] to-[#b9cba7] bg-opacity-20 backdrop-blur-lg shadow-lg">
                                 Submit
                             </button>
                         </form>
     
                         <div className="modal-action">
-                            <button className="btn" onClick={closeModal}>
+                            <button className="btn btn-outline" onClick={closeModal}>
                                 Close
                             </button>
                         </div>

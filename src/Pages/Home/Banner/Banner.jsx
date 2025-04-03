@@ -35,35 +35,35 @@ const Banner = () => {
 
         <div className=' py-8 md:py-14 pt-0'>
 
-        <div
-            className="hero md:min-h-screen h-80 mx-auto p-0 m-0"
-            style={{
-                backgroundImage: `url(${bannerImage})`,
-               width: "80%"
-            }}>
+            <div
+                className="hero md:min-h-screen h-80 mx-auto p-0 m-0"
+                style={{
+                    backgroundImage: `url(${bannerImage})`,
+                    width: "80%"
+                }}>
 
 
-            <div className="hero-content text-neutral-content text-center">
-                <div   data-aos="fade-right"
-                    data-aos-delay="100"
-                    data-aos-duration="1000"
-                     className="max-w-3xl">
-                   
-                    <h1
-                  
-                     className="mb-5 text-4xl md:text-8xl font-bold pt-2 text-red-600 font-bold  md:font-extrabold shadow-xl rounded-full">Grand-<span className='text-orange-500'>Gateway</span></h1>
-                    
-                    
-                    <p 
-                       
-                    
-                                    className="mb-5 text-lg md:text-3xl text-[#AAB99A] font-extrabold shadow-xl inline px-2">
-                    No More Delivery Hassles!!
-                    </p>
+                <div className="hero-content text-neutral-content text-center">
+                    <div data-aos="fade-right"
+                        data-aos-delay="100"
+                        data-aos-duration="1000"
+                        className="max-w-3xl border p-4 text-white bg-white/20 backdrop-blur-md  border-white/30 shadow-lg rounded-xl ">
 
+                        <h1
+
+                            className="mb-5 text-4xl md:text-8xl pt-2 text-red-600 font-bold  md:font-extrabold  rounded-full">Grand-<span className='text-orange-500'>Gateway</span></h1>
+
+
+                        <p
+
+
+                            className="mb-5 text-lg md:text-3xl text-[#7F8B73] font-extrabold  inline px-2">
+                            No More Delivery Hassles!!
+                        </p>
+
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     );
 };

@@ -39,7 +39,7 @@ const Hero = () => {
 
 
     <div
-      className="relative w-full h-[40vh] md:h-[50vh]"
+      className="relative w-full h-[70vh] md:h-[50vh]"
       
     >
       {/* Background Image */}
@@ -56,7 +56,7 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative flex flex-col items-center justify-center h-full text-white text-center">
-        <h1 className="mb-5 text-3xl md:text-5xl font-bold">We Are Now Available on</h1>
+        <h1 className="mb-5 text-xl md:text-3xl font-bold">We Are Now Available on</h1>
 
         {/* App Store and Play Store Buttons */}
         <div className="md:flex md:space-x-4 space-y-4 md:space-y-0">

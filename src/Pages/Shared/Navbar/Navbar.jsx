@@ -99,7 +99,7 @@ const Navbar = () => {
 
   const links = <>
 
-    <li className='font-bold text-lg text-black lg:text-white'><Link to="/">Home</Link></li>
+<Link to="/"><button className='btn btn-outline rounded-full font-bold w-full '>Home</button></Link>
 
   </>
 
@@ -129,7 +129,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className='flex items-center'>
-          <a className="text-xs px-1 md:px-5 md:text-2xl text-white font-bold">Grand -<span className='text-orange-500'>Gateway</span> </a>
+          <a className="text-xs px-1 md:px-5 md:text-2xl text-red-600 font-bold">Grand-<span className='text-orange-500'>Gateway</span> </a>
           <img className='w-4 md:w-10' src={logo} alt="" />
         </div>
 
@@ -213,32 +213,18 @@ const Navbar = () => {
                   <div
                     className="absolute rounded-lg shadow-lg w-[40vw] md:w-[12vw] bg-white right-0 top-14 text-sm p-3 border border-gray-200 z-50"
                   >
-                    <p className="cursor-not-allowed text-gray-700 font-bold text-center border-b pb-2">{user.displayName}</p>
+                    <p className="cursor-not-allowed text-[#7F8B73] font-bold text-center border-b pb-2">{user.displayName}</p>
 
                     <div className="mt-2 space-y-2">
 
 
-                      {/* {user && isAdmin && !isDeliveryman && (
-                        <Link to="/dashboard/statistics" className=" text-blue-600  text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
-                          📊 Admin Dashboard
-                        </Link>
-                      )}
-                      {user && isDeliveryman && !isAdmin &&  (
-                        <Link to="/dashboard/myDeliveryList" className=" text-blue-600 text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
-                          🚚 My Dashboard
-                        </Link>
-                      )}
-                      {user && !isDeliveryman && !isAdmin && (
-                        <Link to="/dashboard/bookaparcel" className=" text-blue-600 text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
-                          📦 My Dashboard
-                        </Link>
-                      )} */}
+                     
 
                       {
                         user ? (
                           isAdmin ? (
 
-                            <Link to="/dashboard/statistics" className=" text-blue-600  text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
+                            <Link to="/dashboard/statistics" className=" text-[#7F8B73]  text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
                               📊 Admin Dashboard
                             </Link>
                           )
@@ -247,12 +233,12 @@ const Navbar = () => {
 
                             (
                               isDeliveryman ? (
-                                <Link to="/dashboard/myDeliveryList" className=" text-blue-600 text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
+                                <Link to="/dashboard/myDeliveryList" className=" text-[#7F8B73] text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
                                   🚚 My Dashboard
                                 </Link>
                               )
                                 :
-                                (<Link to="/dashboard/bookaparcel" className=" text-blue-600 text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
+                                (<Link to="/dashboard/bookaparcel" className=" text-[#7F8B73] text-sm hover:bg-gray-100 px-1 py-1 block font-bold">
                                   📦 My Dashboard
                                 </Link>)
 

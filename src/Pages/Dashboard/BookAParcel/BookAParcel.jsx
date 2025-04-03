@@ -257,7 +257,7 @@ console.log(currentDate)
 <br />
     {/* Submit Button */}
     <div className="col-span-1 md:col-span-2 flex justify-center">
-        <button className="btn btn-success w-full ">
+        <button className="btn bg-gradient-to-b from-[#7f8b73] via-[#95a387] to-[#b9cba7] bg-opacity-20 backdrop-blur-lg shadow-lg  w-full text-black ">
             Book <FaBicycle className="ml-2" />
         </button>
     </div>

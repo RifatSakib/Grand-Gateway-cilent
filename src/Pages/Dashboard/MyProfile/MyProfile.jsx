@@ -113,7 +113,7 @@ const MyProfile = () => {
                             <div className="form-control w-full my-6">
                                 <input {...register('image', { required: true })} type="file" className="file-input  w-full" />
                             </div>
-                            <button className="btn bg-[#4b5a4c] text-white w-full">Update</button>
+                            <button className="btn bg-gradient-to-b from-[#7f8b73] via-[#95a387] to-[#b9cba7] bg-opacity-20 backdrop-blur-lg shadow-lg  w-full text-black">Update</button>
                         </div>
 
                         {/* User Info */}
